@@ -4,11 +4,12 @@
 <meta name="theme-color" content="#2b1a3a">
 <meta name="apple-mobile-web-app-title" content="لقمة">
 <title>لقمة</title>
+<script>try{var s=localStorage.getItem('lq_theme');document.documentElement.dataset.theme=s||(matchMedia('(prefers-color-scheme:dark)').matches?'dark':'light')}catch(e){document.documentElement.dataset.theme='light'}</script>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Arabic:wght@400;600;800&display=swap" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js"></script>
 <style>
-:root{--bg:#f5f4f9;--sf:#fff;--tx:#1a1726;--mu:#6c6880;--ac:#e0245e;--ac2:#ff7a45;--gd:#f2a900;--ln:#e6e3ef;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
-@media(prefers-color-scheme:dark){:root{--bg:#100e1a;--sf:#1b1830;--tx:#f3f1fa;--mu:#a09bb6;--ac:#ff4d79;--ac2:#ff9457;--gd:#ffc83d;--ln:#2e2a47;color-scheme:dark}}
+:root{--bg:#f5f4f9;--sf:#fff;--tx:#1a1726;--mu:#6c6880;--ac:#e0245e;--ac2:#ff7a45;--gd:#f2a900;--ln:#e6e3ef;color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+:root[data-theme="dark"]{--bg:#100e1a;--sf:#1b1830;--tx:#f3f1fa;--mu:#a09bb6;--ac:#ff4d79;--ac2:#ff9457;--gd:#ffc83d;--ln:#2e2a47;color-scheme:dark}
 *{box-sizing:border-box;margin:0}
 html,body{height:100%;background:var(--bg);color:var(--tx);font-family:'Noto Sans Arabic',system-ui,sans-serif;overflow:hidden}
 #app{height:100%;display:flex;flex-direction:column}
@@ -18,10 +19,11 @@ main{flex:1;min-height:0;position:relative}
 body[data-tab=reels] #hdr{background:linear-gradient(rgba(0,0,0,.6),transparent);border:0;color:#fff}
 .logo{display:flex;align-items:center;gap:8px;font-weight:800;font-size:22px}
 .mark{width:32px;height:32px}
-#lg{display:flex;align-items:center;gap:6px;background:none;border:1px solid currentColor;border-radius:20px;color:inherit;padding:5px 12px;font:600 13px 'Noto Sans Arabic',sans-serif;cursor:pointer;opacity:.9}
-#lg svg{width:18px;height:18px}
+.hb{display:flex;gap:8px}
+.hbtn{display:flex;align-items:center;gap:6px;background:none;border:1px solid currentColor;border-radius:20px;color:inherit;padding:5px 11px;font:600 13px 'Noto Sans Arabic',sans-serif;cursor:pointer;opacity:.9}
+.hbtn svg{width:18px;height:18px}
 nav{display:flex;background:var(--sf);border-top:1px solid var(--ln)}
-nav button{flex:1;padding:8px 0 6px;background:none;border:0;color:var(--mu);font:600 11px 'Noto Sans Arabic',sans-serif;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:3px}
+nav button{flex:1;min-width:0;padding:8px 0 6px;background:none;border:0;color:var(--mu);font:600 10px 'Noto Sans Arabic',sans-serif;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:3px}
 nav button.on{color:var(--ac)}
 button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{outline:2px solid var(--ac);outline-offset:2px}
 #reels{scroll-snap-type:y mandatory;background:#000}
@@ -31,41 +33,60 @@ button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-vis
 .shade{position:absolute;inset:0;background:linear-gradient(transparent 45%,rgba(0,0,0,.8))}
 .info{position:relative;padding:16px 16px 24px;width:calc(100% - 76px)}
 .usr{display:flex;align-items:center;gap:8px;font-size:14px;font-weight:600;margin-bottom:10px}
-.av{width:30px;height:30px;border-radius:50%;background:linear-gradient(135deg,var(--ac),var(--ac2));display:grid;place-items:center;font-weight:800;font-size:14px;color:#fff;flex:none}
+.av{width:30px;height:30px;border-radius:50%;background:linear-gradient(135deg,var(--ac),var(--ac2));display:grid;place-items:center;font-weight:800;font-size:14px;color:#fff;flex:none;object-fit:cover}
+.av.big{width:72px;height:72px;font-size:30px}
 .pill{display:inline-flex;align-items:center;gap:5px;background:rgba(255,255,255,.2);backdrop-filter:blur(6px);border-radius:20px;padding:5px 12px;font-weight:600;font-size:14px}
 .pill svg{width:15px;height:15px}
 .info p{font-size:14px;margin-top:8px;line-height:1.7}
 .side{position:absolute;inset-inline-end:10px;bottom:28px;display:flex;flex-direction:column;gap:18px;align-items:center}
 .side button{background:rgba(0,0,0,.4);border:0;color:#fff;border-radius:50%;width:50px;height:50px;display:grid;place-items:center;cursor:pointer}
 .side button.liked{color:var(--ac)}.side svg{width:26px;height:26px}
-.side small{display:block;font-size:12px;text-align:center;margin-top:3px;font-weight:600}
+.side small{display:block;font-size:12px;text-align:center;margin-top:3px;font-weight:600;color:#fff}
 .pad{padding:72px 16px 24px}
 h1{font-size:24px;font-weight:800;margin-bottom:12px}
+h2.sec{font-size:18px;font-weight:800;margin:22px 0 10px}
 input,select,textarea{width:100%;padding:13px 14px;border-radius:12px;border:1px solid var(--ln);background:var(--sf);color:var(--tx);font:400 16px 'Noto Sans Arabic',sans-serif;margin-top:8px}
 .chips{display:flex;gap:8px;margin:14px 0;overflow-x:auto;padding-bottom:2px}
 .chip{padding:8px 16px;border-radius:20px;border:1px solid var(--ln);background:var(--sf);color:var(--tx);font:600 14px 'Noto Sans Arabic',sans-serif;cursor:pointer;white-space:nowrap}
 .chip.on{background:var(--ac);border-color:var(--ac);color:#fff}
 .seg{display:flex;gap:8px;margin-top:10px}.seg .chip{flex:1;text-align:center}
 .place{display:flex;gap:14px;align-items:center;padding:12px;margin-bottom:10px;background:var(--sf);border:1px solid var(--ln);border-radius:16px;cursor:pointer}
-.tile{width:58px;height:58px;border-radius:14px;display:grid;place-items:center;font-size:28px;flex:none}
+.tile{width:58px;height:58px;border-radius:14px;display:grid;place-items:center;flex:none;overflow:hidden;color:#fff}
+.tile svg{width:28px;height:28px}
+.timg{width:100%;height:100%;object-fit:cover}
 .place b{display:block;font-size:16px;margin-bottom:2px}
+.rk{width:26px;flex:none;font-weight:800;font-size:20px;text-align:center;color:var(--mu)}
+.rk.r1{color:#e6a700}.rk.r2{color:#9aa4b2}.rk.r3{color:#c27a3a}
 small,.mu{color:var(--mu)}.mu{margin:8px 0;line-height:1.7}
+.mi{display:inline-flex;vertical-align:-2px}.mi svg{width:14px;height:14px}
 .stars{color:var(--gd);letter-spacing:1px}
 .badge{display:inline-block;background:var(--ln);color:var(--mu);border-radius:10px;padding:2px 10px;font-size:12px;font-weight:600}
-.vbadge{display:inline-flex;align-items:center;justify-content:center;width:18px;height:18px;border-radius:50%;background:#1d9bf0;color:#fff;font-size:11px;font-weight:800;margin-inline-start:6px;vertical-align:middle}
+.vbadge{display:inline-flex;align-items:center;justify-content:center;width:18px;height:18px;border-radius:50%;background:#1d9bf0;margin-inline-start:6px;vertical-align:middle}
+.vbadge svg{width:11px;height:11px}
+.feat{background:linear-gradient(135deg,var(--ac),var(--ac2));border-radius:18px;padding:2px;margin-bottom:8px}
+.fin{background:var(--sf);border-radius:16px;padding:12px}
+.fin .place{border:0;padding:0;margin:0;background:none}
+.ftag{display:flex;align-items:center;gap:6px;font-weight:800;color:var(--ac);margin-bottom:10px;font-size:14px}
+.ftag svg{width:18px;height:18px}
+.vgrid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.vcard{position:relative;border-radius:14px;overflow:hidden;aspect-ratio:9/13;background:#000;cursor:pointer}
+.vcard video,.vcard img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.vov{position:absolute;inset-inline:0;bottom:0;padding:24px 10px 8px;background:linear-gradient(transparent,rgba(0,0,0,.8));color:#fff}
+.vov b{display:block;font-size:13px}.vov small{color:#fff}
 .stat{display:flex;gap:10px;margin:14px 0}
 .stat div{flex:1;background:var(--sf);border:1px solid var(--ln);border-radius:14px;padding:12px;text-align:center}
 .stat b{display:block;font-size:22px}
 .btn{background:linear-gradient(135deg,var(--ac),var(--ac2));color:#fff;border:0;border-radius:14px;padding:14px;font:700 16px 'Noto Sans Arabic',sans-serif;width:100%;cursor:pointer;margin-top:14px}
 .btn.ghost{background:none;color:var(--ac);border:1px solid var(--ac)}.btn:disabled{opacity:.6}
 a.btn{display:block;text-align:center;text-decoration:none}
-.hero{height:130px;border-radius:20px;display:grid;place-items:center;font-size:60px;margin:12px 0}
+.hero{height:130px;border-radius:20px;display:grid;place-items:center;margin:12px 0;overflow:hidden;color:#fff}
+.hero svg{width:52px;height:52px}
 .rev{display:flex;gap:12px;padding:14px 0;border-bottom:1px solid var(--ln)}
 .rev p{margin-top:4px;line-height:1.7}
 label{display:block;font-weight:700;margin-top:16px}
 .rate{display:flex;gap:6px;margin-top:8px}.rate button{background:none;border:0;font-size:34px;color:var(--ln);cursor:pointer;padding:0}.rate .f{color:var(--gd)}
 .modal{position:fixed;inset:0;background:rgba(0,0,0,.55);display:flex;align-items:flex-end;z-index:20}
-.box{background:var(--sf);width:100%;max-height:85%;overflow-y:auto;border-radius:22px 22px 0 0;padding:20px 18px calc(20px + env(safe-area-inset-bottom,0px))}
+.box{background:var(--sf);width:100%;max-height:88%;overflow-y:auto;border-radius:22px 22px 0 0;padding:20px 18px calc(20px + env(safe-area-inset-bottom,0px))}
 .box h2{font-size:20px;margin-bottom:6px}.err{color:var(--ac);margin-top:8px}
 .toast{position:fixed;bottom:90px;left:50%;transform:translateX(-50%);background:var(--tx);color:var(--bg);padding:10px 18px;border-radius:20px;font-weight:700;z-index:30}
 a{color:var(--ac);font-weight:700}
@@ -74,14 +95,16 @@ a{color:var(--ac);font-weight:700}
 <header id="hdr"></header>
 <section class="view on" id="reels"></section>
 <section class="view" id="discover"><div class="pad" id="dBody"></div></section>
+<section class="view" id="suggest"><div class="pad" id="sBody"></div></section>
+<section class="view" id="top"><div class="pad" id="tBody"></div></section>
 <section class="view" id="post"><div class="pad" id="pBody"></div></section>
 <section class="view" id="me"><div class="pad" id="mBody"></div></section>
 </main><nav id="nav"></nav></div>
 <script>
 const T={
-ar:{brand:'لقمة',reels:'ريلز',discover:'اكتشف',post:'انشر',me:'حسابي',loading:'جاري التحميل…',searching:'جاري البحث…',search_ph:'ابحث عن مطعم أو كافيه',all:'الكل',c_restaurant:'مطاعم',c_cafe:'كافيهات',c_fast_food:'وجبات سريعة',c_dessert:'حلويات',no_results:'ما لكينا نتائج. جرب كلمة ثانية.',no_places:'ما كو أماكن بعد. المطاعم والكافيهات تسجّل حسابها وتظهر هنا.',unrated:'بدون تقييم بعد',back:'رجوع',add_review:'أضف مراجعتك',review_ph:'شلون كانت تجربتك؟',send_review:'انشر المراجعة',reviews_n:'مراجعة',first_rate:'كن أول من يقيّم',open_map:'افتح بالخريطة',call:'اتصل',comments:'التعليقات',comment_ph:'اكتب تعليقك',send:'أرسل',first_comment:'كن أول من يعلّق.',login:'تسجيل الدخول',signup:'حساب جديد',create:'إنشاء حساب',enter:'دخول',have_acc:'عندي حساب',no_acc:'ما عندي حساب',name:'اسمك',email:'الإيميل',pass_ph:'كلمة السر (6 أحرف على الأقل)',guest_note:'المشاهدة بدون حساب. الحساب للنشر والتعليق والتقييم.',need_valid:'اكتب إيميل وكلمة سر من 6 أحرف أو أكثر',check_email:'تحقق من إيميلك لتأكيد الحساب',welcome:'أهلاً بك',need_login:'تحتاج حساب حتى تنشر.',post_title:'انشر ريل',place:'المكان',place_ph:'ابحث عن اسم المطعم',file_lbl:'فيديو أو صورة (حتى 50 ميغا)',rating_opt:'تقييمك (اختياري)',caption:'الوصف',caption_ph:'اكتب شي عن التجربة',publish:'انشر',uploading:'جاري الرفع…',pick_both:'اختر المكان وارفع ملف',too_big:'الملف أكبر من 50 ميغا',up_fail:'فشل الرفع: ',post_fail:'تعذر النشر: ',posted:'تم النشر',no_reels:'ما كو ريلات بعد. كن أول من ينشر!',load_fail:'تعذر التحميل: ',my_acc:'حسابي',logout:'تسجيل الخروج',login_hint:'سجّل دخولك لتنشر وتعلّق وتقيّم.',ads:'للإعلان في لقمة:',choose_lang:'اللغة',pick_rating:'اختار عدد النجوم',rev_posted:'تم نشر المراجعة',send_fail:'تعذر الإرسال',baghdad:'بغداد',guest:'مستخدم',ad_subject:'إعلان في لقمة',code:'ع',acct_user:'مستخدم',acct_venue:'مطعم أو كافيه',venue_name:'اسم المطعم أو الكافيه',setup_title:'سجّل صفحة مطعمك',v_category:'النوع',v_address:'الحي أو العنوان',v_phone:'رقم الهاتف',v_desc:'وصف مختصر',v_save:'حفظ',v_need:'اكتب الاسم والعنوان',venue_saved:'تم حفظ صفحة مطعمك',register_venue:'سجّل مطعمك أو كافيهك',edit_place:'تعديل صفحة مطعمي',avg:'متوسط التقييم',reels_n:'ريلات',own_note:'ما تكدر تقيّم مكانك.',role_user:'حساب مستخدم',role_venue:'حساب مطعم',verified:'موثّق',pending_verify:'صفحتك بانتظار التوثيق',request_verify:'اطلب التوثيق',verify_subject:'طلب توثيق'},
-ku:{brand:'لقمە',reels:'ڕیلز',discover:'دۆزینەوە',post:'بڵاوکردنەوە',me:'هەژمارم',loading:'چاوەڕێ بکە…',searching:'گەڕان…',search_ph:'بگەڕێ بۆ چێشتخانە یان کافێ',all:'هەموو',c_restaurant:'چێشتخانەکان',c_cafe:'کافێکان',c_fast_food:'خواردنی خێرا',c_dessert:'شیرینی',no_results:'ئەنجام نەدۆزرایەوە. وشەیەکی تر تاقی بکەرەوە.',no_places:'هێشتا هیچ شوێنێک نییە. چێشتخانە و کافێکان هەژمار دروست دەکەن و لێرە دەردەکەون.',unrated:'هێشتا هەڵسەنگاندنی نییە',back:'گەڕانەوە',add_review:'هەڵسەنگاندنەکەت زیاد بکە',review_ph:'ئەزموونەکەت چۆن بوو؟',send_review:'هەڵسەنگاندن بڵاوبکەرەوە',reviews_n:'هەڵسەنگاندن',first_rate:'یەکەم کەس بە کە هەڵیدەسەنگێنێت',open_map:'لە نەخشە بکەرەوە',call:'پەیوەندی',comments:'لێدوانەکان',comment_ph:'لێدوانێک بنووسە',send:'ناردن',first_comment:'یەکەم کەس بە کە لێدوان دەدات.',login:'چوونەژوورەوە',signup:'هەژماری نوێ',create:'دروستکردنی هەژمار',enter:'چوونەژوورەوە',have_acc:'هەژمارم هەیە',no_acc:'هەژمارم نییە',name:'ناوت',email:'ئیمەیڵ',pass_ph:'وشەی نهێنی (لانیکەم ٦ پیت)',guest_note:'بینین بێ هەژمار دەکرێت. هەژمار بۆ بڵاوکردنەوە و لێدوان و هەڵسەنگاندنە.',need_valid:'ئیمەیڵ و وشەی نهێنی لانیکەم ٦ پیت بنووسە',check_email:'ئیمەیڵەکەت بپشکنە بۆ دڵنیاکردنەوەی هەژمار',welcome:'بەخێربێیت',need_login:'بۆ بڵاوکردنەوە پێویستت بە هەژمارە.',post_title:'ڕیلێک بڵاوبکەرەوە',place:'شوێن',place_ph:'بگەڕێ بەدوای ناوی چێشتخانە',file_lbl:'ڤیدیۆ یان وێنە (تا ٥٠ مێگا)',rating_opt:'هەڵسەنگاندنت (ئارەزوومەندانە)',caption:'وەسف',caption_ph:'دەربارەی ئەزموونەکە بنووسە',publish:'بڵاوکردنەوە',uploading:'بارکردن…',pick_both:'شوێن هەڵبژێرە و فایلێک بار بکە',too_big:'فایلەکە لە ٥٠ مێگا گەورەترە',up_fail:'بارکردن سەرنەکەوت: ',post_fail:'بڵاوکردنەوە سەرنەکەوت: ',posted:'بڵاوکرایەوە',no_reels:'هێشتا ڕیلز نییە. یەکەم کەس بە کە بڵاوی دەکاتەوە!',load_fail:'بارکردن سەرنەکەوت: ',my_acc:'هەژمارم',logout:'چوونەدەرەوە',login_hint:'بچۆرە ژوورەوە بۆ بڵاوکردنەوە و لێدوان و هەڵسەنگاندن.',ads:'بۆ ڕیکلام لە لقمە:',choose_lang:'زمان',pick_rating:'ژمارەی ئەستێرەکان هەڵبژێرە',rev_posted:'هەڵسەنگاندن بڵاوکرایەوە',send_fail:'نەنێردرا',baghdad:'بەغدا',guest:'بەکارهێنەر',ad_subject:'ڕیکلام لە لقمە',code:'ک',acct_user:'بەکارهێنەر',acct_venue:'چێشتخانە یان کافێ',venue_name:'ناوی چێشتخانە یان کافێ',setup_title:'پەڕەی شوێنەکەت تۆمار بکە',v_category:'جۆر',v_address:'گەڕەک یان ناونیشان',v_phone:'ژمارەی تەلەفۆن',v_desc:'وەسفێکی کورت',v_save:'پاشەکەوتکردن',v_need:'ناو و ناونیشان بنووسە',venue_saved:'پەڕەی شوێنەکەت پاشەکەوت کرا',register_venue:'چێشتخانە یان کافێکەت تۆمار بکە',edit_place:'دەستکاریکردنی پەڕەکەم',avg:'تێکڕای هەڵسەنگاندن',reels_n:'ڕیل',own_note:'ناتوانیت شوێنەکەی خۆت هەڵبسەنگێنیت.',role_user:'هەژماری بەکارهێنەر',role_venue:'هەژماری شوێن',verified:'پشتڕاستکراوە',pending_verify:'پەڕەکەت چاوەڕێی پشتڕاستکردنەوەیە',request_verify:'داوای پشتڕاستکردنەوە بکە',verify_subject:'داوای پشتڕاستکردنەوە'},
-en:{brand:'Luqma',reels:'Reels',discover:'Discover',post:'Post',me:'Profile',loading:'Loading…',searching:'Searching…',search_ph:'Search restaurants or cafes',all:'All',c_restaurant:'Restaurants',c_cafe:'Cafes',c_fast_food:'Fast food',c_dessert:'Desserts',no_results:'No results. Try another word.',no_places:'No places yet. Restaurants and cafes sign up and appear here.',unrated:'No ratings yet',back:'Back',add_review:'Add your review',review_ph:'How was your experience?',send_review:'Post review',reviews_n:'reviews',first_rate:'Be the first to rate',open_map:'Open in maps',call:'Call',comments:'Comments',comment_ph:'Write a comment',send:'Send',first_comment:'Be the first to comment.',login:'Log in',signup:'Sign up',create:'Create account',enter:'Log in',have_acc:'I have an account',no_acc:"I don't have an account",name:'Your name',email:'Email',pass_ph:'Password (min 6 characters)',guest_note:'Browsing needs no account. An account is for posting, commenting and rating.',need_valid:'Enter an email and a password of 6+ characters',check_email:'Check your email to confirm your account',welcome:'Welcome',need_login:'You need an account to post.',post_title:'Post a reel',place:'Place',place_ph:'Search for a restaurant name',file_lbl:'Video or photo (up to 50 MB)',rating_opt:'Your rating (optional)',caption:'Caption',caption_ph:'Tell us about the experience',publish:'Post',uploading:'Uploading…',pick_both:'Pick a place and upload a file',too_big:'File is larger than 50 MB',up_fail:'Upload failed: ',post_fail:'Could not post: ',posted:'Posted',no_reels:'No reels yet. Be the first to post!',load_fail:'Could not load: ',my_acc:'Profile',logout:'Log out',login_hint:'Log in to post, comment and rate.',ads:'Advertise on Luqma:',choose_lang:'Language',pick_rating:'Pick a star rating',rev_posted:'Review posted',send_fail:'Could not send',baghdad:'Baghdad',guest:'User',ad_subject:'Advertising on Luqma',code:'EN',acct_user:'User',acct_venue:'Restaurant or cafe',venue_name:'Restaurant or cafe name',setup_title:'Set up your venue page',v_category:'Type',v_address:'Area or address',v_phone:'Phone number',v_desc:'Short description',v_save:'Save',v_need:'Enter a name and an address',venue_saved:'Your venue page is saved',register_venue:'Register your restaurant or cafe',edit_place:'Edit my venue page',avg:'Average rating',reels_n:'Reels',own_note:"You can't rate your own venue.",role_user:'User account',role_venue:'Venue account',verified:'Verified',pending_verify:'Your page is awaiting verification',request_verify:'Request verification',verify_subject:'Verification request'}
+ar:{brand:'لقمة',reels:'ريلز',discover:'اكتشف',suggest:'مقترحات',top:'Top 10',post:'انشر',me:'حسابي',loading:'جاري التحميل…',searching:'جاري البحث…',search_ph:'ابحث عن مطعم أو كافيه',all:'الكل',c_restaurant:'مطاعم',c_cafe:'كافيهات',c_fast_food:'وجبات سريعة',c_dessert:'حلويات',no_results:'ما لكينا نتائج. جرب كلمة ثانية.',no_places:'ما كو أماكن بعد. المطاعم والكافيهات تسجّل حسابها وتظهر هنا.',unrated:'بدون تقييم بعد',back:'رجوع',add_review:'أضف مراجعتك',review_ph:'شلون كانت تجربتك؟',send_review:'انشر المراجعة',reviews_n:'مراجعة',first_rate:'كن أول من يقيّم',open_map:'افتح بالخريطة',call:'اتصل',comments:'التعليقات',comment_ph:'اكتب تعليقك',send:'أرسل',first_comment:'كن أول من يعلّق.',login:'تسجيل الدخول',signup:'حساب جديد',create:'إنشاء حساب',enter:'دخول',have_acc:'عندي حساب',no_acc:'ما عندي حساب',name:'اسمك',email:'الإيميل',pass_ph:'كلمة السر (6 أحرف على الأقل)',guest_note:'المشاهدة بدون حساب. الحساب للنشر والتعليق والتقييم.',need_valid:'اكتب إيميل وكلمة سر من 6 أحرف أو أكثر',check_email:'تحقق من إيميلك لتأكيد الحساب',welcome:'أهلاً بك',need_login:'تحتاج حساب حتى تنشر.',post_title:'انشر ريل',place:'المكان',place_ph:'ابحث عن اسم المطعم',file_lbl:'فيديو أو صورة (حتى 50 ميغا)',rating_opt:'تقييمك (اختياري)',caption:'الوصف',caption_ph:'اكتب شي عن التجربة',publish:'انشر',uploading:'جاري الرفع…',pick_both:'اختر المكان وارفع ملف',too_big:'الملف أكبر من 50 ميغا',up_fail:'فشل الرفع: ',post_fail:'تعذر النشر: ',posted:'تم النشر',no_reels:'ما كو ريلات بعد. كن أول من ينشر!',load_fail:'تعذر التحميل: ',my_acc:'حسابي',logout:'تسجيل الخروج',login_hint:'سجّل دخولك لتنشر وتعلّق وتقيّم.',ads:'للإعلان في لقمة:',choose_lang:'اللغة',pick_rating:'اختار عدد النجوم',rev_posted:'تم نشر المراجعة',send_fail:'تعذر الإرسال',baghdad:'بغداد',guest:'مستخدم',ad_subject:'إعلان في لقمة',code:'ع',acct_user:'مستخدم',acct_venue:'مطعم أو كافيه',venue_name:'اسم المطعم أو الكافيه',setup_title:'سجّل صفحة مطعمك',v_category:'النوع',v_address:'الحي أو العنوان',v_phone:'رقم الهاتف',v_desc:'وصف مختصر',v_save:'حفظ',v_need:'اكتب الاسم والعنوان',venue_saved:'تم حفظ صفحة مطعمك',register_venue:'سجّل مطعمك أو كافيهك',edit_place:'تعديل صفحة مطعمي',avg:'متوسط التقييم',reels_n:'ريلات',own_note:'ما تكدر تقيّم مكانك.',role_user:'حساب مستخدم',role_venue:'حساب مطعم',verified:'موثّق',pending_verify:'صفحتك بانتظار التوثيق',request_verify:'اطلب التوثيق',verify_subject:'طلب توثيق',sugg_title:'مقترحات الأسبوع',top_title:'أفضل 10 مطاعم',week_pick:'مقترح الأسبوع',free_ad:'إعلان مجاني للفائز',best_rated:'المطاعم الأعلى تقييماً',best_videos:'الفيديوهات الأكثر إعجاباً',points:'نقطة',rules:'النقاط = إعجابات + تعليقات + مراجعات خلال آخر 7 أيام. صاحب المركز الأول يحصل على إعلان مجاني في مقترحات الأسبوع.',empty_week:'ما كو تفاعل هذا الأسبوع بعد. كن أول من يعطي إعجاب أو يعلّق!',empty_rated:'ما كو مطاعم بتقييم 4 نجوم أو أكثر بعد.',empty_vid:'ما كو فيديوهات بعد.',change_photo:'غيّر الصورة',photo_saved:'تم حفظ الصورة',theme_light:'الوضع الفاتح',theme_dark:'الوضع الداكن',open_place:'افتح صفحة المكان'},
+ku:{brand:'لقمە',reels:'ڕیلز',discover:'دۆزینەوە',suggest:'پێشنیار',top:'Top 10',post:'بڵاوکردنەوە',me:'هەژمارم',loading:'چاوەڕێ بکە…',searching:'گەڕان…',search_ph:'بگەڕێ بۆ چێشتخانە یان کافێ',all:'هەموو',c_restaurant:'چێشتخانەکان',c_cafe:'کافێکان',c_fast_food:'خواردنی خێرا',c_dessert:'شیرینی',no_results:'ئەنجام نەدۆزرایەوە. وشەیەکی تر تاقی بکەرەوە.',no_places:'هێشتا هیچ شوێنێک نییە. چێشتخانە و کافێکان هەژمار دروست دەکەن و لێرە دەردەکەون.',unrated:'هێشتا هەڵسەنگاندنی نییە',back:'گەڕانەوە',add_review:'هەڵسەنگاندنەکەت زیاد بکە',review_ph:'ئەزموونەکەت چۆن بوو؟',send_review:'هەڵسەنگاندن بڵاوبکەرەوە',reviews_n:'هەڵسەنگاندن',first_rate:'یەکەم کەس بە کە هەڵیدەسەنگێنێت',open_map:'لە نەخشە بکەرەوە',call:'پەیوەندی',comments:'لێدوانەکان',comment_ph:'لێدوانێک بنووسە',send:'ناردن',first_comment:'یەکەم کەس بە کە لێدوان دەدات.',login:'چوونەژوورەوە',signup:'هەژماری نوێ',create:'دروستکردنی هەژمار',enter:'چوونەژوورەوە',have_acc:'هەژمارم هەیە',no_acc:'هەژمارم نییە',name:'ناوت',email:'ئیمەیڵ',pass_ph:'وشەی نهێنی (لانیکەم ٦ پیت)',guest_note:'بینین بێ هەژمار دەکرێت. هەژمار بۆ بڵاوکردنەوە و لێدوان و هەڵسەنگاندنە.',need_valid:'ئیمەیڵ و وشەی نهێنی لانیکەم ٦ پیت بنووسە',check_email:'ئیمەیڵەکەت بپشکنە بۆ دڵنیاکردنەوەی هەژمار',welcome:'بەخێربێیت',need_login:'بۆ بڵاوکردنەوە پێویستت بە هەژمارە.',post_title:'ڕیلێک بڵاوبکەرەوە',place:'شوێن',place_ph:'بگەڕێ بەدوای ناوی چێشتخانە',file_lbl:'ڤیدیۆ یان وێنە (تا ٥٠ مێگا)',rating_opt:'هەڵسەنگاندنت (ئارەزوومەندانە)',caption:'وەسف',caption_ph:'دەربارەی ئەزموونەکە بنووسە',publish:'بڵاوکردنەوە',uploading:'بارکردن…',pick_both:'شوێن هەڵبژێرە و فایلێک بار بکە',too_big:'فایلەکە لە ٥٠ مێگا گەورەترە',up_fail:'بارکردن سەرنەکەوت: ',post_fail:'بڵاوکردنەوە سەرنەکەوت: ',posted:'بڵاوکرایەوە',no_reels:'هێشتا ڕیلز نییە. یەکەم کەس بە کە بڵاوی دەکاتەوە!',load_fail:'بارکردن سەرنەکەوت: ',my_acc:'هەژمارم',logout:'چوونەدەرەوە',login_hint:'بچۆرە ژوورەوە بۆ بڵاوکردنەوە و لێدوان و هەڵسەنگاندن.',ads:'بۆ ڕیکلام لە لقمە:',choose_lang:'زمان',pick_rating:'ژمارەی ئەستێرەکان هەڵبژێرە',rev_posted:'هەڵسەنگاندن بڵاوکرایەوە',send_fail:'نەنێردرا',baghdad:'بەغدا',guest:'بەکارهێنەر',ad_subject:'ڕیکلام لە لقمە',code:'ک',acct_user:'بەکارهێنەر',acct_venue:'چێشتخانە یان کافێ',venue_name:'ناوی چێشتخانە یان کافێ',setup_title:'پەڕەی شوێنەکەت تۆمار بکە',v_category:'جۆر',v_address:'گەڕەک یان ناونیشان',v_phone:'ژمارەی تەلەفۆن',v_desc:'وەسفێکی کورت',v_save:'پاشەکەوتکردن',v_need:'ناو و ناونیشان بنووسە',venue_saved:'پەڕەی شوێنەکەت پاشەکەوت کرا',register_venue:'چێشتخانە یان کافێکەت تۆمار بکە',edit_place:'دەستکاریکردنی پەڕەکەم',avg:'تێکڕای هەڵسەنگاندن',reels_n:'ڕیل',own_note:'ناتوانیت شوێنەکەی خۆت هەڵبسەنگێنیت.',role_user:'هەژماری بەکارهێنەر',role_venue:'هەژماری شوێن',verified:'پشتڕاستکراوە',pending_verify:'پەڕەکەت چاوەڕێی پشتڕاستکردنەوەیە',request_verify:'داوای پشتڕاستکردنەوە بکە',verify_subject:'داوای پشتڕاستکردنەوە',sugg_title:'پێشنیارەکانی هەفتە',top_title:'باشترین ١٠ چێشتخانە',week_pick:'پێشنیاری هەفتە',free_ad:'ڕیکلامی بێبەرامبەر بۆ براوە',best_rated:'بەرزترین هەڵسەنگاندن',best_videos:'ڤیدیۆکانی زۆرترین لایک',points:'خاڵ',rules:'خاڵەکان = لایک + لێدوان + هەڵسەنگاندن لە ٧ ڕۆژی ڕابردوودا. خاوەنی پلەی یەکەم ڕیکلامی بێبەرامبەر لە پێشنیارەکانی هەفتە وەردەگرێت.',empty_week:'هێشتا هیچ چالاکییەک ئەم هەفتەیە نییە. یەکەم کەس بە کە لایک یان لێدوان دەدات!',empty_rated:'هێشتا هیچ چێشتخانەیەک بە ٤ ئەستێرە یان زیاتر نییە.',empty_vid:'هێشتا ڤیدیۆ نییە.',change_photo:'وێنە بگۆڕە',photo_saved:'وێنە پاشەکەوت کرا',theme_light:'ڕووناک',theme_dark:'تاریک',open_place:'پەڕەی شوێن بکەرەوە'},
+en:{brand:'Luqma',reels:'Reels',discover:'Discover',suggest:'Picks',top:'Top 10',post:'Post',me:'Profile',loading:'Loading…',searching:'Searching…',search_ph:'Search restaurants or cafes',all:'All',c_restaurant:'Restaurants',c_cafe:'Cafes',c_fast_food:'Fast food',c_dessert:'Desserts',no_results:'No results. Try another word.',no_places:'No places yet. Restaurants and cafes sign up and appear here.',unrated:'No ratings yet',back:'Back',add_review:'Add your review',review_ph:'How was your experience?',send_review:'Post review',reviews_n:'reviews',first_rate:'Be the first to rate',open_map:'Open in maps',call:'Call',comments:'Comments',comment_ph:'Write a comment',send:'Send',first_comment:'Be the first to comment.',login:'Log in',signup:'Sign up',create:'Create account',enter:'Log in',have_acc:'I have an account',no_acc:"I don't have an account",name:'Your name',email:'Email',pass_ph:'Password (min 6 characters)',guest_note:'Browsing needs no account. An account is for posting, commenting and rating.',need_valid:'Enter an email and a password of 6+ characters',check_email:'Check your email to confirm your account',welcome:'Welcome',need_login:'You need an account to post.',post_title:'Post a reel',place:'Place',place_ph:'Search for a restaurant name',file_lbl:'Video or photo (up to 50 MB)',rating_opt:'Your rating (optional)',caption:'Caption',caption_ph:'Tell us about the experience',publish:'Post',uploading:'Uploading…',pick_both:'Pick a place and upload a file',too_big:'File is larger than 50 MB',up_fail:'Upload failed: ',post_fail:'Could not post: ',posted:'Posted',no_reels:'No reels yet. Be the first to post!',load_fail:'Could not load: ',my_acc:'Profile',logout:'Log out',login_hint:'Log in to post, comment and rate.',ads:'Advertise on Luqma:',choose_lang:'Language',pick_rating:'Pick a star rating',rev_posted:'Review posted',send_fail:'Could not send',baghdad:'Baghdad',guest:'User',ad_subject:'Advertising on Luqma',code:'EN',acct_user:'User',acct_venue:'Restaurant or cafe',venue_name:'Restaurant or cafe name',setup_title:'Set up your venue page',v_category:'Type',v_address:'Area or address',v_phone:'Phone number',v_desc:'Short description',v_save:'Save',v_need:'Enter a name and an address',venue_saved:'Your venue page is saved',register_venue:'Register your restaurant or cafe',edit_place:'Edit my venue page',avg:'Average rating',reels_n:'Reels',own_note:"You can't rate your own venue.",role_user:'User account',role_venue:'Venue account',verified:'Verified',pending_verify:'Your page is awaiting verification',request_verify:'Request verification',verify_subject:'Verification request',sugg_title:"This week's picks",top_title:'Top 10 restaurants',week_pick:'Pick of the week',free_ad:'free ad for the winner',best_rated:'Highest rated',best_videos:'Most liked videos',points:'pts',rules:'Points = likes + comments + reviews in the last 7 days. The number 1 venue gets a free ad in the weekly picks.',empty_week:'No activity this week yet. Be the first to like or comment!',empty_rated:'No venues rated 4 stars or more yet.',empty_vid:'No videos yet.',change_photo:'Change photo',photo_saved:'Photo saved',theme_light:'Light mode',theme_dark:'Dark mode',open_place:'Open place page'}
 };
 let lang='ar';try{lang=localStorage.getItem('lq_lang')||((navigator.language||'').startsWith('ku')?'ku':(navigator.language||'').startsWith('en')?'en':'ar')}catch(e){}
 const t=k=>(T[lang]&&T[lang][k])??T.ar[k]??k;
@@ -100,18 +123,33 @@ me:'<path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" 
 heart:'<path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1-1.1a5.5 5.5 0 0 0-7.8 7.8l1 1.1L12 21.2l7.8-7.7 1-1.1a5.5 5.5 0 0 0 0-7.8z"/>',
 msg:'<path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>',
 globe:'<circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>',
-pin:'<path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/>'};
+pin:'<path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/>',
+star:'<polygon points="12 2 15.1 8.6 22 9.3 16.8 14 18.2 21 12 17.5 5.8 21 7.2 14 2 9.3 8.9 8.6 12 2"/>',
+trophy:'<path d="M8 21h8M12 17v4M7 4h10v5a5 5 0 0 1-10 0V4z"/><path d="M17 5h3v2a3 3 0 0 1-3 3M7 5H4v2a3 3 0 0 0 3 3"/>',
+moon:'<path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/>',
+sun:'<circle cx="12" cy="12" r="4"/><line x1="12" y1="2" x2="12" y2="4"/><line x1="12" y1="20" x2="12" y2="22"/><line x1="2" y1="12" x2="4" y2="12"/><line x1="20" y1="12" x2="22" y2="12"/><line x1="4.9" y1="4.9" x2="6.3" y2="6.3"/><line x1="17.7" y1="17.7" x2="19.1" y2="19.1"/><line x1="4.9" y1="19.1" x2="6.3" y2="17.7"/><line x1="17.7" y1="6.3" x2="19.1" y2="4.9"/>',
+restaurant:'<path d="M6 3v7a2 2 0 0 0 4 0V3"/><path d="M8 3v18"/><path d="M17 21V3c-2.5 1.5-3.5 4.5-3.5 8 0 1.8 1.2 2.7 3.5 3"/>',
+cafe:'<path d="M4 9h12v5a5 5 0 0 1-5 5H9a5 5 0 0 1-5-5V9z"/><path d="M16 11h2a2.5 2.5 0 0 1 0 5h-2"/><path d="M8 3v3M12 3v3"/>',
+fast_food:'<path d="M4 11a8 6 0 0 1 16 0z"/><path d="M3 15h18"/><path d="M4 18v1a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-1z"/>',
+dessert:'<path d="M5 12h14v3a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2v-3z"/><path d="M7 17l1 4h8l1-4"/><path d="M8 12a4 4 0 0 1 8 0"/><path d="M12 8V6"/>',
+store:'<path d="M3 9l1.5-5h15L21 9"/><path d="M4 9v11h16V9"/><path d="M3 9a3 3 0 0 0 6 0 3 3 0 0 0 6 0 3 3 0 0 0 6 0"/>'};
 const ic=(n,f)=>`<svg viewBox="0 0 24 24" width="24" height="24" fill="${f?'currentColor':'none'}" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${P[n]}</svg>`;
+const cico=c=>ic(['restaurant','cafe','fast_food','dessert'].includes(c)?c:'store');
+const mi=(n,f)=>`<span class="mi">${ic(n,f)}</span>`;
+const CHK='<svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="5 12 10 17 19 7"/></svg>';
 const sb=supabase.createClient('https://ametfnpidphdczoqjsqw.supabase.co','sb_publishable_qINjSvkNtkbULN4ahmWuCg_VawdEqsH');
 const $=s=>document.querySelector(s);
 const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const stars=n=>{n=Math.round(n)||0;return '★'.repeat(n)+'☆'.repeat(5-n)};
 const isVid=u=>/\.(mp4|mov|webm|m4v)(\?|$)/i.test(u||'');
-const EM={restaurant:'🍽️',cafe:'☕',fast_food:'🍔',dessert:'🍰'};
 const GR={restaurant:'linear-gradient(135deg,#ff8a5b,#e11d48)',cafe:'linear-gradient(135deg,#a47148,#4a2f1d)',fast_food:'linear-gradient(135deg,#ffc53d,#fb8500)',dessert:'linear-gradient(135deg,#ff8fb8,#b5179e)'};
 const gr=c=>GR[c]||'linear-gradient(135deg,#8c87a6,#4b4666)';
-const av=n=>`<div class="av">${esc((n||'?').trim().charAt(0).toUpperCase())}</div>`;
-const vb=p=>p&&p.verified?`<span class="vbadge" title="${t('verified')}" aria-label="${t('verified')}">✓</span>`:'';
+const PCOLS='id,name,address,category,verified,image_url';
+const av=(n,u,big)=>u?`<img class="av${big?' big':''}" src="${esc(u)}" alt="" loading="lazy">`:`<div class="av${big?' big':''}">${esc((n||'?').trim().charAt(0).toUpperCase())}</div>`;
+const vb=p=>p&&p.verified?`<span class="vbadge" title="${t('verified')}" aria-label="${t('verified')}">${CHK}</span>`:'';
+const tile=p=>`<div class="tile" style="background:${gr(p.category)}">${p.image_url?`<img class="timg" src="${esc(p.image_url)}" alt="" loading="lazy">`:cico(p.category)}</div>`;
+const placeRow=(p,extra,rk)=>`<div class="place" tabindex="0" data-open="${p.id}">${rk?`<div class="rk${rk<4?' r'+rk:''}">${rk}</div>`:''}${tile(p)}<div><b>${esc(p.name)}${vb(p)}</b>${extra||''}<br><small>${esc(p.address||t('baghdad'))}</small></div></div>`;
+const bindOpen=el=>el.querySelectorAll('[data-open]').forEach(d=>d.onclick=()=>openPlace(d.dataset.open));
 let user=null,profile=null,myPlace=null,tab='reels',reelsData=[];
 function toast(m){const d=document.createElement('div');d.className='toast';d.textContent=m;document.body.appendChild(d);setTimeout(()=>d.remove(),2200)}
 function sheet(h){const m=document.createElement('div');m.className='modal';m.innerHTML='<div class="box"></div>';m.firstChild.innerHTML=h;m.onclick=e=>{if(e.target===m)m.remove()};document.body.appendChild(m);return m}
@@ -121,11 +159,16 @@ const debounce=(f,ms=350)=>{let x;return(...a)=>{clearTimeout(x);x=setTimeout(()
 const mapUrl=p=>'https://www.google.com/maps/search/?api=1&query='+(p.lat!=null&&p.lng!=null?p.lat+','+p.lng:encodeURIComponent((p.name||'')+' '+(p.address||'')+' '+t('baghdad')));
 const isV=()=>profile?.role==='venue';
 
-/* chrome + language */
+/* theme + chrome + language */
+const theme=()=>document.documentElement.dataset.theme||'light';
+function setTheme(m){document.documentElement.dataset.theme=m;try{localStorage.setItem('lq_theme',m)}catch(e){}
+ const mc=document.querySelector('meta[name=theme-color]');if(mc)mc.content=m==='dark'?'#100e1a':'#ffffff';chrome()}
 function chrome(){
- $('#hdr').innerHTML=`<div class="logo"><img class="mark" src="${ICON}" alt="">${t('brand')}</div><button id="lg" aria-label="${t('choose_lang')}">${ic('globe')}<span>${t('code')}</span></button>`;
+ const dk=theme()==='dark';
+ $('#hdr').innerHTML=`<div class="logo"><img class="mark" src="${ICON}" alt="">${t('brand')}</div><div class="hb"><button id="th" class="hbtn" aria-label="${t(dk?'theme_light':'theme_dark')}">${ic(dk?'sun':'moon')}</button><button id="lg" class="hbtn" aria-label="${t('choose_lang')}">${ic('globe')}<span>${t('code')}</span></button></div>`;
+ $('#th').onclick=()=>setTheme(dk?'light':'dark');
  $('#lg').onclick=langSheet;
- $('#nav').innerHTML=[['reels','reels'],['discover','search'],['post','post'],['me','me']].map(([v,i])=>`<button data-v="${v}" class="${v===tab?'on':''}">${ic(i)}<span>${t(v)}</span></button>`).join('');
+ $('#nav').innerHTML=[['reels','reels'],['discover','search'],['suggest','star'],['top','trophy'],['post','post'],['me','me']].map(([v,i])=>`<button data-v="${v}" class="${v===tab?'on':''}">${ic(i)}<span>${t(v)}</span></button>`).join('');
  $('#nav').querySelectorAll('button').forEach(b=>b.onclick=()=>show(b.dataset.v));
 }
 function setLang(l){lang=l;try{localStorage.setItem('lq_lang',l)}catch(e){}
@@ -144,7 +187,7 @@ function login(mode='in',cb,pre){
   const email=q('#em').value.trim(),password=q('#pw').value;
   if(!email||password.length<6){q('#er').textContent=t('need_valid');return}
   q('#go').disabled=true;
-  const r=up?await sb.auth.signUp({email,password,options:{data:{name:q('#nm').value.trim()||t('guest'),role:type}}}):await sb.auth.signInWithPassword({email,password});
+  const r=up?await sb.auth.signUp({email,password,options:{emailRedirectTo:location.origin+location.pathname,data:{name:q('#nm').value.trim()||t('guest'),role:type}}}):await sb.auth.signInWithPassword({email,password});
   q('#go').disabled=false;
   if(r.error){q('#er').textContent=r.error.message;return}
   if(!r.data.session){m.remove();toast(t('check_email'));return}
@@ -152,7 +195,7 @@ function login(mode='in',cb,pre){
 }
 async function loadProfile(){
  if(!user){profile=null;myPlace=null;refresh();return}
- const {data:p}=await sb.from('profiles').select('role,display_name').eq('id',user.id).maybeSingle();
+ const {data:p}=await sb.from('profiles').select('role,display_name,avatar_url').eq('id',user.id).maybeSingle();
  profile=p||{role:'user',display_name:user.user_metadata?.name};
  myPlace=null;
  if(profile.role==='venue'){
@@ -163,6 +206,26 @@ async function loadProfile(){
 function refresh(){if(tab==='me')renderMe();if(tab==='post')renderPost()}
 sb.auth.onAuthStateChange((_e,s)=>{user=s?.user||null;setTimeout(loadProfile,0)});
 
+async function setAvatar(file){
+ if(!file||!user)return;
+ try{
+  const img=await new Promise((res,rej)=>{const i=new Image();i.onload=()=>res(i);i.onerror=rej;i.src=URL.createObjectURL(file)});
+  const S=256,c=document.createElement('canvas');c.width=c.height=S;
+  const m=Math.min(img.width,img.height);
+  c.getContext('2d').drawImage(img,(img.width-m)/2,(img.height-m)/2,m,m,0,0,S,S);
+  const blob=await new Promise(r=>c.toBlob(r,'image/jpeg',.85));
+  const path=`${user.id}/avatar-${Date.now()}.jpg`;
+  const up=await sb.storage.from('media').upload(path,blob,{contentType:'image/jpeg'});
+  if(up.error){toast(t('up_fail')+up.error.message);return}
+  const url=sb.storage.from('media').getPublicUrl(path).data.publicUrl;
+  const r=await sb.from('profiles').update({avatar_url:url}).eq('id',user.id);
+  if(r.error){toast(t('send_fail'));return}
+  profile.avatar_url=url;
+  if(myPlace){const u=await sb.from('places').update({image_url:url}).eq('id',myPlace.id);if(!u.error)myPlace.image_url=url}
+  toast(t('photo_saved'));renderMe();
+ }catch(e){toast(t('send_fail'))}
+}
+
 function venueForm(){
  const p=myPlace||{};
  const m=sheet(`<h2>${t('setup_title')}</h2><label>${t('venue_name')}</label><input id="vn" maxlength="80" value="${esc(p.name||profile?.display_name||'')}"><label>${t('v_category')}</label><select id="vc">${['restaurant','cafe','fast_food','dessert'].map(c=>`<option value="${c}" ${c===(p.category||'restaurant')?'selected':''}>${t('c_'+c)}</option>`).join('')}</select><label>${t('v_address')}</label><input id="va" maxlength="120" value="${esc(p.address||'')}"><label>${t('v_phone')}</label><input id="vp" type="tel" dir="ltr" maxlength="30" value="${esc(p.phone||'')}"><label>${t('v_desc')}</label><textarea id="vd" rows="3" maxlength="400">${esc(p.description||'')}</textarea><p class="err" id="er"></p><button class="btn" id="vs">${t('v_save')}</button>`);
@@ -170,6 +233,7 @@ function venueForm(){
   const g=s=>m.querySelector(s).value.trim();
   const row={name:g('#vn'),category:g('#vc'),address:g('#va'),phone:g('#vp')||null,description:g('#vd')||null};
   if(!row.name||!row.address){m.querySelector('#er').textContent=t('v_need');return}
+  if(!myPlace&&profile?.avatar_url)row.image_url=profile.avatar_url;
   const r=myPlace?await sb.from('places').update(row).eq('id',myPlace.id).select().single():await sb.from('places').insert({...row,owner_id:user.id}).select().single();
   if(r.error){m.querySelector('#er').textContent=r.error.message;return}
   myPlace=r.data;m.remove();toast(t('venue_saved'));refresh()};
@@ -180,13 +244,13 @@ const io=new IntersectionObserver(es=>es.forEach(e=>{const v=e.target.querySelec
 function paint(r){const a=document.querySelector(`.reel[data-id="${r.id}"]`);if(!a)return;const b=a.querySelector('[data-a=like]');b.innerHTML=ic('heart',r.mine);b.classList.toggle('liked',r.mine);a.querySelector('.ln').textContent=r.n;a.querySelector('.cn').textContent=r.c}
 async function loadReels(){
  const el=$('#reels');io.disconnect();el.innerHTML=`<p class="empty">${t('loading')}</p>`;
- const {data,error}=await sb.from('reels').select('id,caption,media_url,places!place_id(name,verified),profiles!user_id(display_name)').order('created_at',{ascending:false}).limit(30);
+ const {data,error}=await sb.from('reels').select('id,caption,media_url,places!place_id(name,verified),profiles!user_id(display_name,avatar_url)').order('created_at',{ascending:false}).limit(30);
  if(error){el.innerHTML=`<p class="empty">${t('load_fail')}${esc(error.message)}</p>`;return}
  if(!data.length){el.innerHTML=`<p class="empty">${t('no_reels')}</p>`;return}
  const ids=data.map(r=>r.id);
  const [l,c]=await Promise.all([sb.from('likes').select('reel_id,user_id').in('reel_id',ids),sb.from('comments').select('reel_id').in('reel_id',ids)]);
  reelsData=data.map(r=>({...r,n:(l.data||[]).filter(x=>x.reel_id===r.id).length,mine:!!user&&(l.data||[]).some(x=>x.reel_id===r.id&&x.user_id===user.id),c:(c.data||[]).filter(x=>x.reel_id===r.id).length}));
- el.innerHTML=reelsData.map(r=>{const nm=r.profiles?.display_name||t('guest');return `<article class="reel" data-id="${r.id}">${isVid(r.media_url)?`<video src="${esc(r.media_url)}" muted loop playsinline preload="metadata"></video>`:`<img src="${esc(r.media_url)}" alt="">`}<div class="shade"></div><div class="info"><div class="usr">${av(nm)}<span>${esc(nm)}</span></div><span class="pill">${ic('pin')}${esc(r.places?.name)}${vb(r.places)}</span><p>${esc(r.caption)}</p></div><div class="side"><div><button data-a="like" aria-label="like"></button><small class="ln">0</small></div><div><button data-a="cm" aria-label="${t('comments')}">${ic('msg')}</button><small class="cn">0</small></div></div></article>`}).join('');
+ el.innerHTML=reelsData.map(r=>{const nm=r.profiles?.display_name||t('guest');return `<article class="reel" data-id="${r.id}">${isVid(r.media_url)?`<video src="${esc(r.media_url)}" muted loop playsinline preload="metadata"></video>`:`<img src="${esc(r.media_url)}" alt="">`}<div class="shade"></div><div class="info"><div class="usr">${av(nm,r.profiles?.avatar_url)}<span>${esc(nm)}</span></div><span class="pill">${ic('pin')}${esc(r.places?.name)}${vb(r.places)}</span><p>${esc(r.caption)}</p></div><div class="side"><div><button data-a="like" aria-label="like"></button><small class="ln">0</small></div><div><button data-a="cm" aria-label="${t('comments')}">${ic('msg')}</button><small class="cn">0</small></div></div></article>`}).join('');
  reelsData.forEach(paint);el.querySelectorAll('.reel').forEach(a=>io.observe(a));
 }
 $('#reels').addEventListener('click',async e=>{
@@ -200,8 +264,8 @@ $('#reels').addEventListener('click',async e=>{
 async function comments(r){
  const m=sheet('');const box=m.firstChild;
  const draw=async()=>{
-  const {data}=await sb.from('comments').select('body,profiles!user_id(display_name)').eq('reel_id',r.id).order('created_at');
-  box.innerHTML=`<h2>${t('comments')}</h2>${(data||[]).map(c=>{const n=c.profiles?.display_name||t('guest');return `<div class="rev">${av(n)}<div><b>${esc(n)}</b><p>${esc(c.body)}</p></div></div>`}).join('')||`<p class="mu">${t('first_comment')}</p>`}<input id="ct" maxlength="500" placeholder="${t('comment_ph')}"><button class="btn" id="cs">${t('send')}</button>`;
+  const {data}=await sb.from('comments').select('body,profiles!user_id(display_name,avatar_url)').eq('reel_id',r.id).order('created_at');
+  box.innerHTML=`<h2>${t('comments')}</h2>${(data||[]).map(c=>{const n=c.profiles?.display_name||t('guest');return `<div class="rev">${av(n,c.profiles?.avatar_url)}<div><b>${esc(n)}</b><p>${esc(c.body)}</p></div></div>`}).join('')||`<p class="mu">${t('first_comment')}</p>`}<input id="ct" maxlength="500" placeholder="${t('comment_ph')}"><button class="btn" id="cs">${t('send')}</button>`;
   box.querySelector('#cs').onclick=async()=>{
    const x=box.querySelector('#ct').value.trim();if(!x)return;
    if(!user){m.remove();login('in',()=>comments(r));return}
@@ -221,25 +285,26 @@ function renderDiscover(){
 }
 async function list(){
  const box=$('#list');box.innerHTML=`<p class="mu">${t('searching')}</p>`;
- let s=sb.from('places').select('id,name,address,category,verified').order('verified',{ascending:false}).order('name').limit(40);
+ let s=sb.from('places').select(PCOLS).order('verified',{ascending:false}).order('name').limit(40);
  if(q)s=s.ilike('name','%'+q.replace(/[%,]/g,' ')+'%');
  if(cat)s=s.eq('category',cat);
  const {data,error}=await s;
  if(error){box.innerHTML=`<p class="mu">${t('load_fail')}${esc(error.message)}</p>`;return}
- if(!data.length){box.innerHTML=`<p class="mu">${q||cat?t('no_results'):t('no_places')}</p>${!q&&!cat&&!user?`<button class="btn" id="rv">${t('register_venue')}</button>`:''}`;const b=$('#rv');if(b)b.onclick=()=>login('up',null,'venue');return}
+ if(!data.length){box.innerHTML=`<p class="mu">${q||cat?t('no_results'):t('no_places')}</p>${!q&&!cat&&!user?`<button class="btn" id="rv">${t('register_venue')}</button>`:''}`;const b=box.querySelector('#rv');if(b)b.onclick=()=>login('up',null,'venue');return}
  const rv=await sb.from('reviews').select('place_id,rating').in('place_id',data.map(p=>p.id));
  box.innerHTML=data.map(p=>{const a=(rv.data||[]).filter(x=>x.place_id===p.id);const avg=a.length?a.reduce((s,x)=>s+x.rating,0)/a.length:0;
-  return `<div class="place" tabindex="0" data-id="${p.id}"><div class="tile" style="background:${gr(p.category)}">${EM[p.category]||'🍴'}</div><div><b>${esc(p.name)}${vb(p)}</b>${a.length?`<span class="stars">${stars(avg)}</span> <small>${avg.toFixed(1)} (${a.length})</small>`:`<small>${t('unrated')}</small>`}<br><small>${esc(p.address||t('baghdad'))}</small></div></div>`}).join('');
- box.querySelectorAll('.place').forEach(d=>d.onclick=()=>detail(d.dataset.id));
+  return placeRow(p,a.length?`<span class="stars">${stars(avg)}</span> <small>${avg.toFixed(1)} (${a.length})</small>`:`<small>${t('unrated')}</small>`)}).join('');
+ bindOpen(box);
 }
+function openPlace(id){show('discover');detail(id)}
 async function detail(id){
- const [{data:p},{data:rv}]=await Promise.all([sb.from('places').select('*').eq('id',id).single(),sb.from('reviews').select('rating,body,profiles!user_id(display_name)').eq('place_id',id).order('created_at',{ascending:false})]);
+ const [{data:p},{data:rv}]=await Promise.all([sb.from('places').select('*').eq('id',id).single(),sb.from('reviews').select('rating,body,profiles!user_id(display_name,avatar_url)').eq('place_id',id).order('created_at',{ascending:false})]);
  if(!p)return;
  const avg=rv?.length?rv.reduce((s,x)=>s+x.rating,0)/rv.length:0;let rating=0;
  const own=!!user&&p.owner_id===user.id;
- $('#dBody').innerHTML=`<button class="chip" id="back">${t('back')}</button><div class="hero" style="background:${gr(p.category)}">${EM[p.category]||'🍴'}</div><h1>${esc(p.name)}${vb(p)}</h1><div>${rv?.length?`<span class="stars">${stars(avg)}</span> <small>${avg.toFixed(1)} (${rv.length} ${t('reviews_n')})</small>`:`<small>${t('first_rate')}</small>`}</div><p class="mu">${esc(p.address||t('baghdad'))}</p>${p.description?`<p class="mu">${esc(p.description)}</p>`:''}<p><a href="${mapUrl(p)}" target="_blank" rel="noopener">${t('open_map')}</a>${p.phone?` &nbsp; <a href="tel:${esc(p.phone)}">${t('call')}</a>`:''}</p>
+ $('#dBody').innerHTML=`<button class="chip" id="back">${t('back')}</button><div class="hero" style="background:${gr(p.category)}">${p.image_url?`<img class="timg" src="${esc(p.image_url)}" alt="">`:cico(p.category)}</div><h1>${esc(p.name)}${vb(p)}</h1><div>${rv?.length?`<span class="stars">${stars(avg)}</span> <small>${avg.toFixed(1)} (${rv.length} ${t('reviews_n')})</small>`:`<small>${t('first_rate')}</small>`}</div><p class="mu">${esc(p.address||t('baghdad'))}</p>${p.description?`<p class="mu">${esc(p.description)}</p>`:''}<p><a href="${mapUrl(p)}" target="_blank" rel="noopener">${t('open_map')}</a>${p.phone?` &nbsp; <a href="tel:${esc(p.phone)}">${t('call')}</a>`:''}</p>
  ${own?`<p class="mu">${t('own_note')}</p>`:`<label>${t('add_review')}</label><div class="rate" id="rate"></div><textarea id="rt" rows="3" maxlength="1000" placeholder="${t('review_ph')}"></textarea><button class="btn" id="send">${t('send_review')}</button>`}
- <div style="margin-top:20px">${(rv||[]).map(v=>{const n=v.profiles?.display_name||t('guest');return `<div class="rev">${av(n)}<div><b>${esc(n)}</b> <span class="stars">${stars(v.rating)}</span><p>${esc(v.body)}</p></div></div>`}).join('')}</div>`;
+ <div style="margin-top:20px">${(rv||[]).map(v=>{const n=v.profiles?.display_name||t('guest');return `<div class="rev">${av(n,v.profiles?.avatar_url)}<div><b>${esc(n)}</b> <span class="stars">${stars(v.rating)}</span><p>${esc(v.body)}</p></div></div>`}).join('')}</div>`;
  $('#back').onclick=renderDiscover;
  if(!own){rateWidget($('#rate'),v=>rating=v);
  $('#send').onclick=async()=>{
@@ -248,6 +313,44 @@ async function detail(id){
   const {error}=await sb.from('reviews').upsert({user_id:user.id,place_id:id,rating,body:$('#rt').value.trim()},{onConflict:'user_id,place_id'});
   if(error){toast(t('send_fail'));return}
   toast(t('rev_posted'));detail(id)}}
+}
+
+/* suggestions of the week */
+async function loadSuggest(){
+ const b=$('#sBody');b.innerHTML=`<h1>${t('sugg_title')}</h1><p class="mu">${t('loading')}</p>`;
+ const [w,r,v]=await Promise.all([sb.rpc('weekly_top',{lim:1}),sb.rpc('top_rated',{lim:20}),sb.rpc('top_reels',{lim:12})]);
+ if(w.error&&r.error&&v.error){b.innerHTML=`<h1>${t('sugg_title')}</h1><p class="mu">${t('load_fail')}${esc(w.error.message)}</p>`;return}
+ const win=(w.data||[])[0],rated=r.data||[],vids=v.data||[];
+ const ids=[...(win?[win.place_id]:[]),...rated.map(x=>x.place_id)];
+ const pm={};
+ if(ids.length){const {data}=await sb.from('places').select(PCOLS).in('id',ids);(data||[]).forEach(p=>pm[p.id]=p)}
+ let h=`<h1>${t('sugg_title')}</h1>`;
+ if(win&&pm[win.place_id])h+=`<div class="feat"><div class="fin"><div class="ftag">${ic('trophy')}<span>${t('week_pick')} · ${t('free_ad')}</span></div>${placeRow(pm[win.place_id],`<small>${win.score} ${t('points')}</small>`)}</div></div>`;
+ h+=`<h2 class="sec">${t('best_rated')}</h2>`;
+ const rr=rated.filter(x=>pm[x.place_id]);
+ h+=rr.length?rr.map((x,i)=>placeRow(pm[x.place_id],`<span class="stars">${stars(x.avg_rating)}</span> <small>${Number(x.avg_rating).toFixed(1)} (${x.n})</small>`,i+1)).join(''):`<p class="mu">${t('empty_rated')}</p>`;
+ h+=`<h2 class="sec">${t('best_videos')}</h2>`;
+ h+=vids.length?`<div class="vgrid">${vids.map(x=>`<div class="vcard" tabindex="0" data-vid="${x.id}">${isVid(x.media_url)?`<video src="${esc(x.media_url)}#t=0.1" muted playsinline preload="metadata"></video>`:`<img src="${esc(x.media_url)}" alt="" loading="lazy">`}<div class="vov"><b>${esc(x.place_name)}${vb(x)}</b><small>${mi('heart',1)} ${x.likes}</small></div></div>`).join('')}</div>`:`<p class="mu">${t('empty_vid')}</p>`;
+ b.innerHTML=h;bindOpen(b);
+ b.querySelectorAll('[data-vid]').forEach(d=>d.onclick=()=>{
+  const x=vids.find(y=>y.id===d.dataset.vid);if(!x)return;
+  const m=sheet(`${isVid(x.media_url)?`<video src="${esc(x.media_url)}" controls autoplay playsinline style="width:100%;max-height:60vh;border-radius:14px;background:#000"></video>`:`<img src="${esc(x.media_url)}" alt="" style="width:100%;border-radius:14px">`}<h2 style="margin-top:12px">${esc(x.place_name)}</h2><p class="mu">${esc(x.caption)}</p><small>${mi('heart',1)} ${x.likes} · ${esc(x.user_name)}</small><button class="btn" id="op">${t('open_place')}</button>`);
+  m.querySelector('#op').onclick=()=>{m.remove();openPlace(x.place_id)}});
+}
+
+/* top 10 */
+async function loadTop(){
+ const b=$('#tBody');b.innerHTML=`<h1>${t('top_title')}</h1><p class="mu">${t('loading')}</p>`;
+ const {data:w,error}=await sb.rpc('weekly_top',{lim:10});
+ if(error){b.innerHTML=`<h1>${t('top_title')}</h1><p class="mu">${t('load_fail')}${esc(error.message)}</p>`;return}
+ let rows='';
+ if(w.length){
+  const {data:ps}=await sb.from('places').select(PCOLS).in('id',w.map(x=>x.place_id));
+  const pm={};(ps||[]).forEach(p=>pm[p.id]=p);
+  rows=w.filter(x=>pm[x.place_id]).map((x,i)=>placeRow(pm[x.place_id],`<small>${x.score} ${t('points')} · ${mi('heart')} ${x.likes} · ${mi('msg')} ${x.comments} · ${mi('star')} ${x.reviews}</small>`,i+1)).join('');
+ }
+ b.innerHTML=`<h1>${t('top_title')}</h1><p class="mu">${t('rules')}</p>${rows||`<p class="mu">${t('empty_week')}</p>`}`;
+ bindOpen(b);
 }
 
 /* post */
@@ -293,7 +396,8 @@ async function renderMe(){
   const vstat=myPlace.verified?`<p class="mu">${vb(myPlace)} ${t('verified')}</p>`:`<p class="mu">${t('pending_verify')}</p><a class="btn" href="mailto:bnc20255@gmail.com?subject=${encodeURIComponent(t('verify_subject')+' - '+myPlace.name)}&body=${encodeURIComponent(user.email)}">${t('request_verify')}</a>`;
   mid=`<div class="stat"><div><b>${a.length?avg.toFixed(1):'–'}</b><small>${t('avg')}</small></div><div><b>${a.length}</b><small>${t('reviews_n')}</small></div><div><b>${rl.count||0}</b><small>${t('reels_n')}</small></div></div>${vstat}<button class="btn ghost" id="ep">${t('edit_place')}</button>`;
  }else if(v){mid=`<button class="btn" id="ep">${t('setup_title')}</button>`}
- b.innerHTML=`<h1>${t('my_acc')}</h1><div class="rev" style="border:0">${av(uname(user))}<div><b>${esc(uname(user))}</b> <span class="badge">${t(v?'role_venue':'role_user')}</span><p class="mu" dir="ltr">${esc(user.email)}</p></div></div>${mid}<button class="btn ghost" id="lo" style="margin-top:10px">${t('logout')}</button>${footer()}`;
+ b.innerHTML=`<h1>${t('my_acc')}</h1><div class="rev" style="border:0">${av(uname(user),profile?.avatar_url,true)}<div><b>${esc(uname(user))}</b> <span class="badge">${t(v?'role_venue':'role_user')}</span><p class="mu" dir="ltr">${esc(user.email)}</p></div></div><input type="file" id="af" accept="image/*" hidden><button class="btn ghost" id="cph">${t('change_photo')}</button>${mid}<button class="btn ghost" id="lo" style="margin-top:10px">${t('logout')}</button>${footer()}`;
+ $('#cph').onclick=()=>$('#af').click();$('#af').onchange=e=>setAvatar(e.target.files[0]);
  $('#lo').onclick=()=>sb.auth.signOut();const ep=$('#ep');if(ep)ep.onclick=venueForm;
 }
 
@@ -301,7 +405,7 @@ function show(v){
  tab=v;document.body.dataset.tab=v;
  document.querySelectorAll('.view').forEach(x=>x.classList.toggle('on',x.id===v));
  document.querySelectorAll('#nav button').forEach(b=>b.classList.toggle('on',b.dataset.v===v));
- if(v==='reels')loadReels();if(v==='discover')renderDiscover();if(v==='post')renderPost();if(v==='me')renderMe();
+ if(v==='reels')loadReels();if(v==='discover')renderDiscover();if(v==='suggest')loadSuggest();if(v==='top')loadTop();if(v==='post')renderPost();if(v==='me')renderMe();
 }
 document.documentElement.lang=lang==='ku'?'ckb':lang;document.documentElement.dir=lang==='en'?'ltr':'rtl';document.title=t('brand');
 chrome();loadReels();
