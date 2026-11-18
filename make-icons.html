@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>أيقونات لقمة</title>
+<style>body{font-family:system-ui,sans-serif;padding:20px;background:#fff;color:#111}a{display:block;margin:10px 0 24px;padding:14px;background:#e0245e;color:#fff;border-radius:12px;text-align:center;text-decoration:none;font-weight:700}img{width:128px;height:128px;border:1px solid #ccc;border-radius:16px;display:block;margin:6px auto;background:#eee}</style>
+</head><body>
+<h2>أيقونات لقمة</h2>
+<p>اضغط كل زر، ثم Download، وتنحفظ بملفاتك.</p>
+<div id="out"></div>
+<script>
+const SVG="<svg xmlns='http://www.w3.org/2000/svg' width='256' height='256' viewBox='0 0 64 64'><defs><mask id='m'><rect width='64' height='64' fill='#fff'/><circle cx='32' cy='32' r='9' fill='#000'/><circle cx='52' cy='13' r='9' fill='#000'/><circle cx='43' cy='15' r='4.5' fill='#000'/><circle cx='57' cy='24' r='4.5' fill='#000'/></mask></defs><g mask='url(#m)'><circle cx='32' cy='32' r='29' fill='#e8a35a'/><circle cx='32' cy='32' r='24' fill='#ff5d8f'/><g stroke-linecap='round' stroke-width='3.4'><path d='M16 24l5-3' stroke='#fff'/><path d='M12 36l5 2' stroke='#ffe14d'/><path d='M22 49l4-4' stroke='#7be0c3'/><path d='M39 47l4 2' stroke='#fff'/><path d='M49 38l4-3' stroke='#ffe14d'/><path d='M28 14l5 1' stroke='#7be0c3'/></g></g></svg>";
+const out=document.getElementById('out');
+const img=new Image();
+img.onload=()=>{
+  const make=(size,pad,name)=>{
+    const c=document.createElement('canvas');c.width=c.height=size;
+    const x=c.getContext('2d');
+    x.fillStyle='#2b1a3a';x.fillRect(0,0,size,size);
+    const p=size*pad;x.drawImage(img,p,p,size-2*p,size-2*p);
+    c.toBlob(b=>{
+      const u=URL.createObjectURL(b);
+      out.insertAdjacentHTML('beforeend','<img src="'+u+'" alt=""><a href="'+u+'" download="'+name+'">'+name+'</a>');
+    },'image/png');
+  };
+  make(192,.1,'icon-192.png');
+  make(512,.1,'icon-512.png');
+  make(512,.22,'icon-maskable-512.png');
+};
+img.src='data:image/svg+xml,'+encodeURIComponent(SVG);
+</script></body></html>
