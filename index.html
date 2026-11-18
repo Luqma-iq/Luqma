@@ -2,101 +2,148 @@
 <html lang="ar" dir="rtl"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>لقمة</title>
-<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Arabic:wght@400;600;800&display=swap" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js"></script>
 <style>
-:root{--bg:#f6f3fa;--sf:#fff;--tx:#1c1830;--mu:#6b6682;--ac:#d6244f;--gd:#e8a200;--ln:#e2dded;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
-@media(prefers-color-scheme:dark){:root{--bg:#14121f;--sf:#201c33;--tx:#f4f2fa;--mu:#a29db8;--ac:#ff4d6d;--gd:#ffc94d;--ln:#322d4a;color-scheme:dark}}
+:root{--bg:#f5f4f9;--sf:#fff;--tx:#1a1726;--mu:#6c6880;--ac:#e0245e;--ac2:#ff7a45;--gd:#f2a900;--ln:#e6e3ef;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media(prefers-color-scheme:dark){:root{--bg:#100e1a;--sf:#1b1830;--tx:#f3f1fa;--mu:#a09bb6;--ac:#ff4d79;--ac2:#ff9457;--gd:#ffc83d;--ln:#2e2a47;color-scheme:dark}}
 *{box-sizing:border-box;margin:0}
-html,body{height:100%;background:var(--bg);color:var(--tx);font-family:Tajawal,system-ui,sans-serif;overflow:hidden}
+html,body{height:100%;background:var(--bg);color:var(--tx);font-family:'Noto Sans Arabic',system-ui,sans-serif;overflow:hidden}
 #app{height:100%;display:flex;flex-direction:column}
 main{flex:1;min-height:0;position:relative}
 .view{position:absolute;inset:0;display:none;overflow-y:auto}.view.on{display:block}
+#hdr{position:absolute;top:0;inset-inline:0;z-index:6;height:56px;display:flex;align-items:center;justify-content:space-between;padding:0 16px;background:var(--sf);border-bottom:1px solid var(--ln)}
+body[data-tab=reels] #hdr{background:linear-gradient(rgba(0,0,0,.6),transparent);border:0;color:#fff}
+.logo{display:flex;align-items:center;gap:8px;font-weight:800;font-size:22px}
+.mark{width:28px;height:28px;border-radius:9px;background:linear-gradient(135deg,var(--ac),var(--ac2))}
+#lg{display:flex;align-items:center;gap:6px;background:none;border:1px solid currentColor;border-radius:20px;color:inherit;padding:5px 12px;font:600 13px 'Noto Sans Arabic',sans-serif;cursor:pointer;opacity:.9}
+#lg svg{width:18px;height:18px}
 nav{display:flex;background:var(--sf);border-top:1px solid var(--ln)}
-nav button{flex:1;padding:9px 0 7px;background:none;border:0;color:var(--mu);font:700 12px Tajawal,sans-serif;cursor:pointer}
-nav button span{display:block;font-size:21px}nav button.on{color:var(--ac)}
+nav button{flex:1;padding:8px 0 6px;background:none;border:0;color:var(--mu);font:600 11px 'Noto Sans Arabic',sans-serif;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:3px}
+nav button.on{color:var(--ac)}
 button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{outline:2px solid var(--ac);outline-offset:2px}
 #reels{scroll-snap-type:y mandatory;background:#000}
-#reels .empty{color:#fff;padding:40px 20px;text-align:center}
+#reels .empty{color:#fff;padding:120px 24px;text-align:center}
 .reel{height:100%;scroll-snap-align:start;position:relative;display:flex;align-items:flex-end;color:#fff;overflow:hidden}
 .reel video,.reel img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
-.shade{position:absolute;inset:0;background:linear-gradient(transparent 50%,rgba(0,0,0,.75))}
-.info{position:relative;padding:16px 16px 22px;width:calc(100% - 70px)}
-.info h3{font-size:20px;font-weight:800}.info p{font-size:14px;margin-top:6px;line-height:1.6}.usr{font-size:13px;opacity:.85;margin-bottom:4px}
-.side{position:absolute;left:10px;bottom:24px;display:flex;flex-direction:column;gap:16px;align-items:center}
-.side button{background:rgba(0,0,0,.4);border:0;color:#fff;border-radius:50%;width:48px;height:48px;font-size:22px;cursor:pointer}
-.side small{display:block;font-size:12px;text-align:center;margin-top:2px}
-.pad{padding:16px}h1{font-size:26px;font-weight:800;margin-bottom:12px}
-input,select,textarea{width:100%;padding:12px;border-radius:10px;border:1px solid var(--ln);background:var(--sf);color:var(--tx);font:400 16px Tajawal,sans-serif;margin-top:8px}
-.chips{display:flex;gap:8px;margin:12px 0;overflow-x:auto}
-.chip{padding:7px 14px;border-radius:20px;border:1px solid var(--ln);background:var(--sf);color:var(--tx);font:700 14px Tajawal,sans-serif;cursor:pointer;white-space:nowrap}
+.shade{position:absolute;inset:0;background:linear-gradient(transparent 45%,rgba(0,0,0,.8))}
+.info{position:relative;padding:16px 16px 24px;width:calc(100% - 76px)}
+.usr{display:flex;align-items:center;gap:8px;font-size:14px;font-weight:600;margin-bottom:10px}
+.av{width:30px;height:30px;border-radius:50%;background:linear-gradient(135deg,var(--ac),var(--ac2));display:grid;place-items:center;font-weight:800;font-size:14px;color:#fff;flex:none}
+.pill{display:inline-flex;align-items:center;gap:5px;background:rgba(255,255,255,.2);backdrop-filter:blur(6px);border-radius:20px;padding:5px 12px;font-weight:600;font-size:14px}
+.pill svg{width:15px;height:15px}
+.info p{font-size:14px;margin-top:8px;line-height:1.7}
+.side{position:absolute;inset-inline-end:10px;bottom:28px;display:flex;flex-direction:column;gap:18px;align-items:center}
+.side button{background:rgba(0,0,0,.4);border:0;color:#fff;border-radius:50%;width:50px;height:50px;display:grid;place-items:center;cursor:pointer}
+.side button.liked{color:var(--ac)}.side svg{width:26px;height:26px}
+.side small{display:block;font-size:12px;text-align:center;margin-top:3px;font-weight:600}
+.pad{padding:72px 16px 24px}
+h1{font-size:24px;font-weight:800;margin-bottom:12px}
+input,select,textarea{width:100%;padding:13px 14px;border-radius:12px;border:1px solid var(--ln);background:var(--sf);color:var(--tx);font:400 16px 'Noto Sans Arabic',sans-serif;margin-top:8px}
+.chips{display:flex;gap:8px;margin:14px 0;overflow-x:auto;padding-bottom:2px}
+.chip{padding:8px 16px;border-radius:20px;border:1px solid var(--ln);background:var(--sf);color:var(--tx);font:600 14px 'Noto Sans Arabic',sans-serif;cursor:pointer;white-space:nowrap}
 .chip.on{background:var(--ac);border-color:var(--ac);color:#fff}
-.place{display:flex;gap:12px;align-items:center;padding:12px 0;border-bottom:1px solid var(--ln);cursor:pointer}
-.em{width:54px;height:54px;border-radius:14px;display:grid;place-items:center;font-size:28px;flex:none;background:var(--sf);border:1px solid var(--ln)}
-.place b{display:block;font-size:17px}small,.mu{color:var(--mu)}.mu{margin:8px 0}
-.stars{color:var(--gd);letter-spacing:2px}
-.btn{background:var(--ac);color:#fff;border:0;border-radius:12px;padding:13px;font:800 16px Tajawal,sans-serif;width:100%;cursor:pointer;margin-top:14px}
+.place{display:flex;gap:14px;align-items:center;padding:12px;margin-bottom:10px;background:var(--sf);border:1px solid var(--ln);border-radius:16px;cursor:pointer}
+.tile{width:58px;height:58px;border-radius:14px;display:grid;place-items:center;font-size:28px;flex:none}
+.place b{display:block;font-size:16px;margin-bottom:2px}
+small,.mu{color:var(--mu)}.mu{margin:8px 0;line-height:1.7}
+.stars{color:var(--gd);letter-spacing:1px}
+.btn{background:linear-gradient(135deg,var(--ac),var(--ac2));color:#fff;border:0;border-radius:14px;padding:14px;font:700 16px 'Noto Sans Arabic',sans-serif;width:100%;cursor:pointer;margin-top:14px}
 .btn.ghost{background:none;color:var(--ac);border:1px solid var(--ac)}.btn:disabled{opacity:.6}
-.rev{padding:12px 0;border-bottom:1px solid var(--ln)}
-label{display:block;font-weight:700;margin-top:14px}
-.rate{display:flex;gap:6px;margin-top:8px}.rate button{background:none;border:0;font-size:32px;color:var(--ln);cursor:pointer;padding:0}.rate .f{color:var(--gd)}
+.hero{height:130px;border-radius:20px;display:grid;place-items:center;font-size:60px;margin:12px 0}
+.rev{display:flex;gap:12px;padding:14px 0;border-bottom:1px solid var(--ln)}
+.rev p{margin-top:4px;line-height:1.7}
+label{display:block;font-weight:700;margin-top:16px}
+.rate{display:flex;gap:6px;margin-top:8px}.rate button{background:none;border:0;font-size:34px;color:var(--ln);cursor:pointer;padding:0}.rate .f{color:var(--gd)}
 .modal{position:fixed;inset:0;background:rgba(0,0,0,.55);display:flex;align-items:flex-end;z-index:20}
-.box{background:var(--sf);width:100%;max-height:80%;overflow-y:auto;border-radius:18px 18px 0 0;padding:18px 18px calc(18px + env(safe-area-inset-bottom,0px))}
+.box{background:var(--sf);width:100%;max-height:82%;overflow-y:auto;border-radius:22px 22px 0 0;padding:20px 18px calc(20px + env(safe-area-inset-bottom,0px))}
 .box h2{font-size:20px;margin-bottom:6px}.err{color:var(--ac);margin-top:8px}
 .toast{position:fixed;bottom:90px;left:50%;transform:translateX(-50%);background:var(--tx);color:var(--bg);padding:10px 18px;border-radius:20px;font-weight:700;z-index:30}
 a{color:var(--ac);font-weight:700}
-</style></head><body>
+</style></head><body data-tab="reels">
 <div id="app"><main>
+<header id="hdr"></header>
 <section class="view on" id="reels"></section>
 <section class="view" id="discover"><div class="pad" id="dBody"></div></section>
 <section class="view" id="post"><div class="pad" id="pBody"></div></section>
 <section class="view" id="me"><div class="pad" id="mBody"></div></section>
-</main>
-<nav><button class="on" data-v="reels"><span>🎬</span>ريلز</button><button data-v="discover"><span>🔎</span>اكتشف</button><button data-v="post"><span>➕</span>انشر</button><button data-v="me"><span>👤</span>حسابي</button></nav></div>
+</main><nav id="nav"></nav></div>
 <script>
+const T={
+ar:{brand:'لقمة',reels:'ريلز',discover:'اكتشف',post:'انشر',me:'حسابي',loading:'جاري التحميل…',searching:'جاري البحث…',search_ph:'ابحث عن مطعم أو كافيه',all:'الكل',c_restaurant:'مطاعم',c_cafe:'كافيهات',c_fast_food:'وجبات سريعة',no_results:'ما لكينا نتائج. جرب كلمة ثانية.',unrated:'بدون تقييم بعد',back:'رجوع',add_review:'أضف مراجعتك',review_ph:'شلون كانت تجربتك؟',send_review:'انشر المراجعة',reviews_n:'مراجعة',first_rate:'كن أول من يقيّم',open_map:'افتح بالخريطة',comments:'التعليقات',comment_ph:'اكتب تعليقك',send:'أرسل',first_comment:'كن أول من يعلّق.',login:'تسجيل الدخول',signup:'حساب جديد',create:'إنشاء حساب',enter:'دخول',have_acc:'عندي حساب',no_acc:'ما عندي حساب',name:'اسمك',email:'الإيميل',pass_ph:'كلمة السر (6 أحرف على الأقل)',guest_note:'المشاهدة بدون حساب. الحساب للنشر والتعليق والتقييم.',need_valid:'اكتب إيميل وكلمة سر من 6 أحرف أو أكثر',check_email:'تحقق من إيميلك لتأكيد الحساب',welcome:'أهلاً بك',need_login:'تحتاج حساب حتى تنشر.',post_title:'انشر ريل',place:'المكان',place_ph:'ابحث عن اسم المطعم',file_lbl:'فيديو أو صورة (حتى 50 ميغا)',rating_opt:'تقييمك (اختياري)',caption:'الوصف',caption_ph:'اكتب شي عن التجربة',publish:'انشر',uploading:'جاري الرفع…',pick_both:'اختر المكان وارفع ملف',too_big:'الملف أكبر من 50 ميغا',up_fail:'فشل الرفع: ',post_fail:'تعذر النشر: ',posted:'تم النشر',no_reels:'ما كو ريلات بعد. كن أول من ينشر!',load_fail:'تعذر التحميل: ',my_acc:'حسابي',logout:'تسجيل الخروج',login_hint:'سجّل دخولك لتنشر وتعلّق وتقيّم.',ads:'للإعلان في لقمة:',osm:'بيانات الأماكن © مساهمو OpenStreetMap',choose_lang:'اللغة',pick_rating:'اختار عدد النجوم',rev_posted:'تم نشر المراجعة',send_fail:'تعذر الإرسال',baghdad:'بغداد',guest:'مستخدم',ad_subject:'إعلان في لقمة',code:'ع'},
+ku:{brand:'لقمە',reels:'ڕیلز',discover:'دۆزینەوە',post:'بڵاوکردنەوە',me:'هەژمارم',loading:'چاوەڕێ بکە…',searching:'گەڕان…',search_ph:'بگەڕێ بۆ چێشتخانە یان کافێ',all:'هەموو',c_restaurant:'چێشتخانەکان',c_cafe:'کافێکان',c_fast_food:'خواردنی خێرا',no_results:'ئەنجام نەدۆزرایەوە. وشەیەکی تر تاقی بکەرەوە.',unrated:'هێشتا هەڵسەنگاندنی نییە',back:'گەڕانەوە',add_review:'هەڵسەنگاندنەکەت زیاد بکە',review_ph:'ئەزموونەکەت چۆن بوو؟',send_review:'هەڵسەنگاندن بڵاوبکەرەوە',reviews_n:'هەڵسەنگاندن',first_rate:'یەکەم کەس بە کە هەڵیدەسەنگێنێت',open_map:'لە نەخشە بکەرەوە',comments:'لێدوانەکان',comment_ph:'لێدوانێک بنووسە',send:'ناردن',first_comment:'یەکەم کەس بە کە لێدوان دەدات.',login:'چوونەژوورەوە',signup:'هەژماری نوێ',create:'دروستکردنی هەژمار',enter:'چوونەژوورەوە',have_acc:'هەژمارم هەیە',no_acc:'هەژمارم نییە',name:'ناوت',email:'ئیمەیڵ',pass_ph:'وشەی نهێنی (لانیکەم ٦ پیت)',guest_note:'بینین بێ هەژمار دەکرێت. هەژمار بۆ بڵاوکردنەوە و لێدوان و هەڵسەنگاندنە.',need_valid:'ئیمەیڵ و وشەی نهێنی لانیکەم ٦ پیت بنووسە',check_email:'ئیمەیڵەکەت بپشکنە بۆ دڵنیاکردنەوەی هەژمار',welcome:'بەخێربێیت',need_login:'بۆ بڵاوکردنەوە پێویستت بە هەژمارە.',post_title:'ڕیلێک بڵاوبکەرەوە',place:'شوێن',place_ph:'بگەڕێ بەدوای ناوی چێشتخانە',file_lbl:'ڤیدیۆ یان وێنە (تا ٥٠ مێگا)',rating_opt:'هەڵسەنگاندنت (ئارەزوومەندانە)',caption:'وەسف',caption_ph:'دەربارەی ئەزموونەکە بنووسە',publish:'بڵاوکردنەوە',uploading:'بارکردن…',pick_both:'شوێن هەڵبژێرە و فایلێک بار بکە',too_big:'فایلەکە لە ٥٠ مێگا گەورەترە',up_fail:'بارکردن سەرنەکەوت: ',post_fail:'بڵاوکردنەوە سەرنەکەوت: ',posted:'بڵاوکرایەوە',no_reels:'هێشتا ڕیلز نییە. یەکەم کەس بە کە بڵاوی دەکاتەوە!',load_fail:'بارکردن سەرنەکەوت: ',my_acc:'هەژمارم',logout:'چوونەدەرەوە',login_hint:'بچۆرە ژوورەوە بۆ بڵاوکردنەوە و لێدوان و هەڵسەنگاندن.',ads:'بۆ ڕیکلام لە لقمە:',osm:'زانیاری شوێنەکان © بەشداربووانی OpenStreetMap',choose_lang:'زمان',pick_rating:'ژمارەی ئەستێرەکان هەڵبژێرە',rev_posted:'هەڵسەنگاندن بڵاوکرایەوە',send_fail:'نەنێردرا',baghdad:'بەغدا',guest:'بەکارهێنەر',ad_subject:'ڕیکلام لە لقمە',code:'ک'},
+en:{brand:'Luqma',reels:'Reels',discover:'Discover',post:'Post',me:'Profile',loading:'Loading…',searching:'Searching…',search_ph:'Search restaurants or cafes',all:'All',c_restaurant:'Restaurants',c_cafe:'Cafes',c_fast_food:'Fast food',no_results:'No results. Try another word.',unrated:'No ratings yet',back:'Back',add_review:'Add your review',review_ph:'How was your experience?',send_review:'Post review',reviews_n:'reviews',first_rate:'Be the first to rate',open_map:'Open in maps',comments:'Comments',comment_ph:'Write a comment',send:'Send',first_comment:'Be the first to comment.',login:'Log in',signup:'Sign up',create:'Create account',enter:'Log in',have_acc:'I have an account',no_acc:"I don't have an account",name:'Your name',email:'Email',pass_ph:'Password (min 6 characters)',guest_note:'Browsing needs no account. An account is for posting, commenting and rating.',need_valid:'Enter an email and a password of 6+ characters',check_email:'Check your email to confirm your account',welcome:'Welcome',need_login:'You need an account to post.',post_title:'Post a reel',place:'Place',place_ph:'Search for a restaurant name',file_lbl:'Video or photo (up to 50 MB)',rating_opt:'Your rating (optional)',caption:'Caption',caption_ph:'Tell us about the experience',publish:'Post',uploading:'Uploading…',pick_both:'Pick a place and upload a file',too_big:'File is larger than 50 MB',up_fail:'Upload failed: ',post_fail:'Could not post: ',posted:'Posted',no_reels:'No reels yet. Be the first to post!',load_fail:'Could not load: ',my_acc:'Profile',logout:'Log out',login_hint:'Log in to post, comment and rate.',ads:'Advertise on Luqma:',osm:'Place data © OpenStreetMap contributors',choose_lang:'Language',pick_rating:'Pick a star rating',rev_posted:'Review posted',send_fail:'Could not send',baghdad:'Baghdad',guest:'User',ad_subject:'Advertising on Luqma',code:'EN'}
+};
+let lang='ar';try{lang=localStorage.getItem('lq_lang')||((navigator.language||'').startsWith('ku')?'ku':(navigator.language||'').startsWith('en')?'en':'ar')}catch(e){}
+const t=k=>(T[lang]&&T[lang][k])??T.ar[k]??k;
+const P={
+reels:'<circle cx="12" cy="12" r="10"/><polygon points="10 8 16 12 10 16 10 8"/>',
+search:'<circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>',
+post:'<rect x="3" y="3" width="18" height="18" rx="4"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/>',
+me:'<path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/>',
+heart:'<path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1-1.1a5.5 5.5 0 0 0-7.8 7.8l1 1.1L12 21.2l7.8-7.7 1-1.1a5.5 5.5 0 0 0 0-7.8z"/>',
+msg:'<path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>',
+globe:'<circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>',
+pin:'<path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/>'};
+const ic=(n,f)=>`<svg viewBox="0 0 24 24" width="24" height="24" fill="${f?'currentColor':'none'}" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${P[n]}</svg>`;
 const sb=supabase.createClient('https://ametfnpidphdczoqjsqw.supabase.co','sb_publishable_qINjSvkNtkbULN4ahmWuCg_VawdEqsH');
 const $=s=>document.querySelector(s);
 const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const stars=n=>{n=Math.round(n)||0;return '★'.repeat(n)+'☆'.repeat(5-n)};
 const isVid=u=>/\.(mp4|mov|webm|m4v)(\?|$)/i.test(u||'');
 const EM={restaurant:'🍽️',cafe:'☕',fast_food:'🍔'};
+const GR={restaurant:'linear-gradient(135deg,#ff8a5b,#e11d48)',cafe:'linear-gradient(135deg,#a47148,#4a2f1d)',fast_food:'linear-gradient(135deg,#ffc53d,#fb8500)'};
+const gr=c=>GR[c]||'linear-gradient(135deg,#8c87a6,#4b4666)';
+const av=n=>`<div class="av">${esc((n||'?').trim().charAt(0).toUpperCase())}</div>`;
 let user=null,tab='reels',reelsData=[];
-function toast(t){const d=document.createElement('div');d.className='toast';d.textContent=t;document.body.appendChild(d);setTimeout(()=>d.remove(),2200)}
+function toast(m){const d=document.createElement('div');d.className='toast';d.textContent=m;document.body.appendChild(d);setTimeout(()=>d.remove(),2200)}
 function sheet(h){const m=document.createElement('div');m.className='modal';m.innerHTML='<div class="box"></div>';m.firstChild.innerHTML=h;m.onclick=e=>{if(e.target===m)m.remove()};document.body.appendChild(m);return m}
 function rateWidget(el,set){el.innerHTML=[1,2,3,4,5].map(i=>`<button type="button" data-r="${i}" aria-label="${i}">★</button>`).join('');el.onclick=e=>{const b=e.target.closest('button');if(!b)return;const v=+b.dataset.r;set(v);el.querySelectorAll('button').forEach(x=>x.classList.toggle('f',+x.dataset.r<=v))}}
-const uname=u=>u?.user_metadata?.name||'مستخدم';
-const debounce=(f,ms=350)=>{let t;return(...a)=>{clearTimeout(t);t=setTimeout(()=>f(...a),ms)}};
+const uname=u=>u?.user_metadata?.name||t('guest');
+const debounce=(f,ms=350)=>{let x;return(...a)=>{clearTimeout(x);x=setTimeout(()=>f(...a),ms)}};
+
+/* chrome + language */
+function chrome(){
+ $('#hdr').innerHTML=`<div class="logo"><span class="mark"></span>${t('brand')}</div><button id="lg" aria-label="${t('choose_lang')}">${ic('globe')}<span>${t('code')}</span></button>`;
+ $('#lg').onclick=langSheet;
+ $('#nav').innerHTML=[['reels','reels'],['discover','search'],['post','post'],['me','me']].map(([v,i])=>`<button data-v="${v}" class="${v===tab?'on':''}">${ic(i)}<span>${t(v)}</span></button>`).join('');
+ $('#nav').querySelectorAll('button').forEach(b=>b.onclick=()=>show(b.dataset.v));
+}
+function setLang(l){lang=l;try{localStorage.setItem('lq_lang',l)}catch(e){}
+ document.documentElement.lang=l==='ku'?'ckb':l;document.documentElement.dir=l==='en'?'ltr':'rtl';document.title=t('brand');chrome();show(tab)}
+function langSheet(){const m=sheet(`<h2>${t('choose_lang')}</h2>${[['ar','العربية'],['ku','کوردی'],['en','English']].map(([c,n])=>`<button class="btn ${c===lang?'':'ghost'}" data-l="${c}">${n}</button>`).join('')}`);
+ m.querySelectorAll('[data-l]').forEach(b=>b.onclick=()=>{m.remove();setLang(b.dataset.l)})}
 
 /* auth */
 function login(mode='in',cb){
  const up=mode==='up';
- const m=sheet(`<h2>${up?'حساب جديد':'تسجيل الدخول'}</h2><p class="mu">المشاهدة بدون حساب. الحساب للنشر والتعليق والتقييم.</p>${up?'<input id="nm" placeholder="اسمك">':''}<input id="em" type="email" dir="ltr" placeholder="الإيميل"><input id="pw" type="password" dir="ltr" placeholder="كلمة السر (6 أحرف على الأقل)"><p class="err" id="er"></p><button class="btn" id="go">${up?'إنشاء حساب':'دخول'}</button><button class="btn ghost" id="sw">${up?'عندي حساب':'ما عندي حساب'}</button>`);
+ const m=sheet(`<h2>${up?t('signup'):t('login')}</h2><p class="mu">${t('guest_note')}</p>${up?`<input id="nm" placeholder="${t('name')}">`:''}<input id="em" type="email" dir="ltr" placeholder="${t('email')}"><input id="pw" type="password" dir="ltr" placeholder="${t('pass_ph')}"><p class="err" id="er"></p><button class="btn" id="go">${up?t('create'):t('enter')}</button><button class="btn ghost" id="sw">${up?t('have_acc'):t('no_acc')}</button>`);
  const q=s=>m.querySelector(s);
  q('#sw').onclick=()=>{m.remove();login(up?'in':'up',cb)};
  q('#go').onclick=async()=>{
   const email=q('#em').value.trim(),password=q('#pw').value;
-  if(!email||password.length<6){q('#er').textContent='اكتب إيميل وكلمة سر من 6 أحرف أو أكثر';return}
+  if(!email||password.length<6){q('#er').textContent=t('need_valid');return}
   q('#go').disabled=true;
-  const r=up?await sb.auth.signUp({email,password,options:{data:{name:q('#nm').value.trim()||'مستخدم'}}}):await sb.auth.signInWithPassword({email,password});
+  const r=up?await sb.auth.signUp({email,password,options:{data:{name:q('#nm').value.trim()||t('guest')}}}):await sb.auth.signInWithPassword({email,password});
   q('#go').disabled=false;
   if(r.error){q('#er').textContent=r.error.message;return}
-  if(!r.data.session){m.remove();toast('تحقق من إيميلك لتأكيد الحساب');return}
-  m.remove();toast('أهلاً بك');cb&&cb()};
+  if(!r.data.session){m.remove();toast(t('check_email'));return}
+  m.remove();toast(t('welcome'));cb&&cb()};
 }
 sb.auth.onAuthStateChange((_e,s)=>{user=s?.user||null;if(tab==='me')renderMe();if(tab==='post')renderPost()});
 
 /* reels */
 const io=new IntersectionObserver(es=>es.forEach(e=>{const v=e.target.querySelector('video');if(v)e.isIntersecting?v.play().catch(()=>{}):v.pause()}),{root:$('#reels'),threshold:.7});
-function paint(r){const a=document.querySelector(`.reel[data-id="${r.id}"]`);if(!a)return;a.querySelector('[data-a=like]').textContent=r.mine?'❤️':'🤍';a.querySelector('.ln').textContent=r.n;a.querySelector('.cn').textContent=r.c}
+function paint(r){const a=document.querySelector(`.reel[data-id="${r.id}"]`);if(!a)return;const b=a.querySelector('[data-a=like]');b.innerHTML=ic('heart',r.mine);b.classList.toggle('liked',r.mine);a.querySelector('.ln').textContent=r.n;a.querySelector('.cn').textContent=r.c}
 async function loadReels(){
- const el=$('#reels');io.disconnect();el.innerHTML='<p class="empty">جاري التحميل…</p>';
- const {data,error}=await sb.from('reels').select('id,caption,media_url,places(name),profiles(display_name)').order('created_at',{ascending:false}).limit(30);
- if(error){el.innerHTML=`<p class="empty">تعذر التحميل: ${esc(error.message)}</p>`;return}
- if(!data.length){el.innerHTML='<p class="empty">ما كو ريلات بعد. كن أول من ينشر!</p>';return}
+ const el=$('#reels');io.disconnect();el.innerHTML=`<p class="empty">${t('loading')}</p>`;
+ const {data,error}=await sb.from('reels').select('id,caption,media_url,places!place_id(name),profiles!user_id(display_name)').order('created_at',{ascending:false}).limit(30);
+ if(error){el.innerHTML=`<p class="empty">${t('load_fail')}${esc(error.message)}</p>`;return}
+ if(!data.length){el.innerHTML=`<p class="empty">${t('no_reels')}</p>`;return}
  const ids=data.map(r=>r.id);
  const [l,c]=await Promise.all([sb.from('likes').select('reel_id,user_id').in('reel_id',ids),sb.from('comments').select('reel_id').in('reel_id',ids)]);
  reelsData=data.map(r=>({...r,n:(l.data||[]).filter(x=>x.reel_id===r.id).length,mine:!!user&&(l.data||[]).some(x=>x.reel_id===r.id&&x.user_id===user.id),c:(c.data||[]).filter(x=>x.reel_id===r.id).length}));
- el.innerHTML=reelsData.map(r=>`<article class="reel" data-id="${r.id}">${isVid(r.media_url)?`<video src="${esc(r.media_url)}" muted loop playsinline preload="metadata"></video>`:`<img src="${esc(r.media_url)}" alt="">`}<div class="shade"></div><div class="info"><div class="usr">@${esc(r.profiles?.display_name||'مستخدم')}</div><h3>${esc(r.places?.name)}</h3><p>${esc(r.caption)}</p></div><div class="side"><div><button data-a="like" aria-label="إعجاب">🤍</button><small class="ln">0</small></div><div><button data-a="cm" aria-label="تعليقات">💬</button><small class="cn">0</small></div></div></article>`).join('');
+ el.innerHTML=reelsData.map(r=>{const nm=r.profiles?.display_name||t('guest');return `<article class="reel" data-id="${r.id}">${isVid(r.media_url)?`<video src="${esc(r.media_url)}" muted loop playsinline preload="metadata"></video>`:`<img src="${esc(r.media_url)}" alt="">`}<div class="shade"></div><div class="info"><div class="usr">${av(nm)}<span>${esc(nm)}</span></div><span class="pill">${ic('pin')}${esc(r.places?.name)}</span><p>${esc(r.caption)}</p></div><div class="side"><div><button data-a="like" aria-label="like"></button><small class="ln">0</small></div><div><button data-a="cm" aria-label="${t('comments')}">${ic('msg')}</button><small class="cn">0</small></div></div></article>`}).join('');
  reelsData.forEach(paint);el.querySelectorAll('.reel').forEach(a=>io.observe(a));
 }
 $('#reels').addEventListener('click',async e=>{
@@ -110,13 +157,13 @@ $('#reels').addEventListener('click',async e=>{
 async function comments(r){
  const m=sheet('');const box=m.firstChild;
  const draw=async()=>{
-  const {data}=await sb.from('comments').select('body,profiles(display_name)').eq('reel_id',r.id).order('created_at');
-  box.innerHTML=`<h2>التعليقات</h2>${(data||[]).map(c=>`<div class="rev"><b>${esc(c.profiles?.display_name||'مستخدم')}</b><p>${esc(c.body)}</p></div>`).join('')||'<p class="mu">كن أول من يعلّق.</p>'}<input id="ct" maxlength="500" placeholder="اكتب تعليقك"><button class="btn" id="cs">أرسل</button>`;
+  const {data}=await sb.from('comments').select('body,profiles!user_id(display_name)').eq('reel_id',r.id).order('created_at');
+  box.innerHTML=`<h2>${t('comments')}</h2>${(data||[]).map(c=>{const n=c.profiles?.display_name||t('guest');return `<div class="rev">${av(n)}<div><b>${esc(n)}</b><p>${esc(c.body)}</p></div></div>`}).join('')||`<p class="mu">${t('first_comment')}</p>`}<input id="ct" maxlength="500" placeholder="${t('comment_ph')}"><button class="btn" id="cs">${t('send')}</button>`;
   box.querySelector('#cs').onclick=async()=>{
-   const t=box.querySelector('#ct').value.trim();if(!t)return;
+   const x=box.querySelector('#ct').value.trim();if(!x)return;
    if(!user){m.remove();login('in',()=>comments(r));return}
-   const {error}=await sb.from('comments').insert({user_id:user.id,reel_id:r.id,body:t});
-   if(error){toast('تعذر الإرسال');return}
+   const {error}=await sb.from('comments').insert({user_id:user.id,reel_id:r.id,body:x});
+   if(error){toast(t('send_fail'));return}
    r.c++;paint(r);draw()};
  };draw();
 }
@@ -124,81 +171,82 @@ async function comments(r){
 /* discover */
 let q='',cat='';
 function renderDiscover(){
- $('#dBody').innerHTML=`<h1>اكتشف</h1><input id="q" placeholder="ابحث عن مطعم أو كافيه" value="${esc(q)}"><div class="chips">${[['','الكل'],['restaurant','مطاعم'],['cafe','كافيهات'],['fast_food','وجبات سريعة']].map(([v,t])=>`<button class="chip ${v===cat?'on':''}" data-c="${v}">${t}</button>`).join('')}</div><div id="list"></div>`;
+ $('#dBody').innerHTML=`<h1>${t('discover')}</h1><input id="q" placeholder="${t('search_ph')}" value="${esc(q)}"><div class="chips">${[['',t('all')],['restaurant',t('c_restaurant')],['cafe',t('c_cafe')],['fast_food',t('c_fast_food')]].map(([v,n])=>`<button class="chip ${v===cat?'on':''}" data-c="${v}">${n}</button>`).join('')}</div><div id="list"></div>`;
  $('#q').oninput=debounce(e=>{q=e.target.value.trim();list()});
  $('#dBody').querySelectorAll('.chip').forEach(b=>b.onclick=()=>{cat=b.dataset.c;renderDiscover()});
  list();
 }
 async function list(){
- const box=$('#list');box.innerHTML='<p class="mu">جاري البحث…</p>';
+ const box=$('#list');box.innerHTML=`<p class="mu">${t('searching')}</p>`;
  let s=sb.from('places').select('id,name,address,category').order('name').limit(40);
  if(q)s=s.ilike('name','%'+q.replace(/[%,]/g,' ')+'%');
  if(cat)s=s.eq('category',cat);
  const {data,error}=await s;
- if(error){box.innerHTML=`<p class="mu">تعذر التحميل: ${esc(error.message)}</p>`;return}
- if(!data.length){box.innerHTML='<p class="mu">ما لكينا نتائج. جرب كلمة ثانية.</p>';return}
+ if(error){box.innerHTML=`<p class="mu">${t('load_fail')}${esc(error.message)}</p>`;return}
+ if(!data.length){box.innerHTML=`<p class="mu">${t('no_results')}</p>`;return}
  const rv=await sb.from('reviews').select('place_id,rating').in('place_id',data.map(p=>p.id));
- box.innerHTML=data.map(p=>{const a=(rv.data||[]).filter(x=>x.place_id===p.id);const avg=a.length?a.reduce((t,x)=>t+x.rating,0)/a.length:0;
-  return `<div class="place" tabindex="0" data-id="${p.id}"><div class="em">${EM[p.category]||'🍴'}</div><div><b>${esc(p.name)}</b>${a.length?`<span class="stars">${stars(avg)}</span> <small>${avg.toFixed(1)} (${a.length})</small>`:'<small>بدون تقييم بعد</small>'}<br><small>${esc(p.address||'بغداد')}</small></div></div>`}).join('');
+ box.innerHTML=data.map(p=>{const a=(rv.data||[]).filter(x=>x.place_id===p.id);const avg=a.length?a.reduce((s,x)=>s+x.rating,0)/a.length:0;
+  return `<div class="place" tabindex="0" data-id="${p.id}"><div class="tile" style="background:${gr(p.category)}">${EM[p.category]||'🍴'}</div><div><b>${esc(p.name)}</b>${a.length?`<span class="stars">${stars(avg)}</span> <small>${avg.toFixed(1)} (${a.length})</small>`:`<small>${t('unrated')}</small>`}<br><small>${esc(p.address||t('baghdad'))}</small></div></div>`}).join('');
  box.querySelectorAll('.place').forEach(d=>d.onclick=()=>detail(d.dataset.id));
 }
 async function detail(id){
- const [{data:p},{data:rv}]=await Promise.all([sb.from('places').select('*').eq('id',id).single(),sb.from('reviews').select('rating,body,profiles(display_name)').eq('place_id',id).order('created_at',{ascending:false})]);
+ const [{data:p},{data:rv}]=await Promise.all([sb.from('places').select('*').eq('id',id).single(),sb.from('reviews').select('rating,body,profiles!user_id(display_name)').eq('place_id',id).order('created_at',{ascending:false})]);
  if(!p)return;
- const avg=rv?.length?rv.reduce((t,x)=>t+x.rating,0)/rv.length:0;let rating=0;
- $('#dBody').innerHTML=`<button class="chip" id="back">رجوع</button><h1 style="margin-top:12px">${EM[p.category]||'🍴'} ${esc(p.name)}</h1><div>${rv?.length?`<span class="stars">${stars(avg)}</span> <small>${avg.toFixed(1)} (${rv.length} مراجعة)</small>`:'<small>كن أول من يقيّم</small>'}</div><p class="mu">${esc(p.address||'بغداد')}</p><a href="https://www.google.com/maps/search/?api=1&query=${p.lat},${p.lng}" target="_blank" rel="noopener">افتح بالخريطة</a>
- <label>أضف مراجعتك</label><div class="rate" id="rate"></div><textarea id="rt" rows="3" maxlength="1000" placeholder="شلون كانت تجربتك؟"></textarea><button class="btn" id="send">انشر المراجعة</button>
- <div style="margin-top:18px">${(rv||[]).map(v=>`<div class="rev"><b>${esc(v.profiles?.display_name||'مستخدم')}</b> <span class="stars">${stars(v.rating)}</span><p>${esc(v.body)}</p></div>`).join('')}</div>`;
+ const avg=rv?.length?rv.reduce((s,x)=>s+x.rating,0)/rv.length:0;let rating=0;
+ $('#dBody').innerHTML=`<button class="chip" id="back">${t('back')}</button><div class="hero" style="background:${gr(p.category)}">${EM[p.category]||'🍴'}</div><h1>${esc(p.name)}</h1><div>${rv?.length?`<span class="stars">${stars(avg)}</span> <small>${avg.toFixed(1)} (${rv.length} ${t('reviews_n')})</small>`:`<small>${t('first_rate')}</small>`}</div><p class="mu">${esc(p.address||t('baghdad'))}</p><a href="https://www.google.com/maps/search/?api=1&query=${p.lat},${p.lng}" target="_blank" rel="noopener">${t('open_map')}</a>
+ <label>${t('add_review')}</label><div class="rate" id="rate"></div><textarea id="rt" rows="3" maxlength="1000" placeholder="${t('review_ph')}"></textarea><button class="btn" id="send">${t('send_review')}</button>
+ <div style="margin-top:20px">${(rv||[]).map(v=>{const n=v.profiles?.display_name||t('guest');return `<div class="rev">${av(n)}<div><b>${esc(n)}</b> <span class="stars">${stars(v.rating)}</span><p>${esc(v.body)}</p></div></div>`}).join('')}</div>`;
  $('#back').onclick=renderDiscover;rateWidget($('#rate'),v=>rating=v);
  $('#send').onclick=async()=>{
   if(!user)return login('in');
-  if(!rating){toast('اختار عدد النجوم');return}
+  if(!rating){toast(t('pick_rating'));return}
   const {error}=await sb.from('reviews').upsert({user_id:user.id,place_id:id,rating,body:$('#rt').value.trim()},{onConflict:'user_id,place_id'});
-  if(error){toast('تعذر النشر');return}
-  toast('تم نشر المراجعة');detail(id)};
+  if(error){toast(t('send_fail'));return}
+  toast(t('rev_posted'));detail(id)};
 }
 
 /* post */
 function renderPost(){
  const b=$('#pBody');
- if(!user){b.innerHTML='<h1>انشر ريل</h1><p class="mu">تحتاج حساب حتى تنشر.</p><button class="btn" id="lg">سجّل دخول</button>';$('#lg').onclick=()=>login('in');return}
+ if(!user){b.innerHTML=`<h1>${t('post_title')}</h1><p class="mu">${t('need_login')}</p><button class="btn" id="lg2">${t('login')}</button>`;$('#lg2').onclick=()=>login('in');return}
  let rating=0;
- b.innerHTML=`<h1>انشر ريل</h1><label>المكان</label><input id="ps" placeholder="ابحث عن اسم المطعم"><select id="pl" size="4"></select>
- <label>فيديو أو صورة (حتى 50 ميغا)</label><input type="file" id="fl" accept="video/*,image/*"><label>تقييمك (اختياري)</label><div class="rate" id="rate"></div>
- <label>الوصف</label><textarea id="cp" rows="3" maxlength="500" placeholder="اكتب شي عن التجربة"></textarea><button class="btn" id="pub">انشر</button>`;
+ b.innerHTML=`<h1>${t('post_title')}</h1><label>${t('place')}</label><input id="ps" placeholder="${t('place_ph')}"><select id="pl" size="4"></select>
+ <label>${t('file_lbl')}</label><input type="file" id="fl" accept="video/*,image/*"><label>${t('rating_opt')}</label><div class="rate" id="rate"></div>
+ <label>${t('caption')}</label><textarea id="cp" rows="3" maxlength="500" placeholder="${t('caption_ph')}"></textarea><button class="btn" id="pub">${t('publish')}</button>`;
  rateWidget($('#rate'),v=>rating=v);
  $('#ps').oninput=debounce(async e=>{
-  const t=e.target.value.trim();if(t.length<2)return;
-  const {data}=await sb.from('places').select('id,name,address').ilike('name','%'+t.replace(/[%,]/g,' ')+'%').limit(20);
+  const x=e.target.value.trim();if(x.length<2)return;
+  const {data}=await sb.from('places').select('id,name,address').ilike('name','%'+x.replace(/[%,]/g,' ')+'%').limit(20);
   $('#pl').innerHTML=(data||[]).map(p=>`<option value="${p.id}">${esc(p.name)} - ${esc(p.address||'')}</option>`).join('')});
  $('#pub').onclick=async()=>{
   const f=$('#fl').files[0],pid=$('#pl').value;
-  if(!pid||!f){toast('اختر المكان وارفع ملف');return}
-  if(f.size>52428800){toast('الملف أكبر من 50 ميغا');return}
-  const btn=$('#pub');btn.disabled=true;btn.textContent='جاري الرفع…';
+  if(!pid||!f){toast(t('pick_both'));return}
+  if(f.size>52428800){toast(t('too_big'));return}
+  const btn=$('#pub');btn.disabled=true;btn.textContent=t('uploading');
   const ext=(f.name.split('.').pop()||'bin').toLowerCase().replace(/[^a-z0-9]/g,'');
   const path=`${user.id}/${Date.now()}.${ext}`;
   const up=await sb.storage.from('media').upload(path,f,{contentType:f.type});
-  if(up.error){toast('فشل الرفع: '+up.error.message);btn.disabled=false;btn.textContent='انشر';return}
+  if(up.error){toast(t('up_fail')+up.error.message);btn.disabled=false;btn.textContent=t('publish');return}
   const url=sb.storage.from('media').getPublicUrl(path).data.publicUrl;
   const ins=await sb.from('reels').insert({user_id:user.id,place_id:pid,caption:$('#cp').value.trim(),media_url:url});
-  if(ins.error){toast('تعذر النشر: '+ins.error.message);btn.disabled=false;btn.textContent='انشر';return}
+  if(ins.error){toast(t('post_fail')+ins.error.message);btn.disabled=false;btn.textContent=t('publish');return}
   if(rating)await sb.from('reviews').upsert({user_id:user.id,place_id:pid,rating,body:$('#cp').value.trim()},{onConflict:'user_id,place_id'});
-  toast('تم النشر');show('reels')};
+  toast(t('posted'));show('reels')};
 }
 
 /* me */
 function renderMe(){
- $('#mBody').innerHTML=`<h1>حسابي</h1>${user?`<p><b>${esc(uname(user))}</b></p><p class="mu" dir="ltr" style="text-align:right">${esc(user.email)}</p><button class="btn ghost" id="lo">تسجيل الخروج</button>`:`<p class="mu">سجّل دخولك لتنشر وتعلّق وتقيّم.</p><button class="btn" id="li">دخول</button><button class="btn ghost" id="su">حساب جديد</button>`}
- <p style="margin-top:28px"><a href="mailto:bnc20255@gmail.com?subject=إعلان في لقمة">للإعلان في لقمة: bnc20255@gmail.com</a></p><p class="mu"><small>بيانات الأماكن © مساهمو OpenStreetMap</small></p>`;
+ $('#mBody').innerHTML=`<h1>${t('my_acc')}</h1>${user?`<div class="rev" style="border:0">${av(uname(user))}<div><b>${esc(uname(user))}</b><p class="mu" dir="ltr">${esc(user.email)}</p></div></div><button class="btn ghost" id="lo">${t('logout')}</button>`:`<p class="mu">${t('login_hint')}</p><button class="btn" id="li">${t('login')}</button><button class="btn ghost" id="su">${t('signup')}</button>`}
+ <p style="margin-top:28px"><a href="mailto:bnc20255@gmail.com?subject=${encodeURIComponent(t('ad_subject'))}">${t('ads')} bnc20255@gmail.com</a></p><p class="mu"><small>${t('osm')}</small></p>`;
  if(user)$('#lo').onclick=()=>sb.auth.signOut();else{$('#li').onclick=()=>login('in');$('#su').onclick=()=>login('up')}
 }
 
 function show(v){
- tab=v;document.querySelectorAll('.view').forEach(x=>x.classList.toggle('on',x.id===v));
- document.querySelectorAll('nav button').forEach(b=>b.classList.toggle('on',b.dataset.v===v));
+ tab=v;document.body.dataset.tab=v;
+ document.querySelectorAll('.view').forEach(x=>x.classList.toggle('on',x.id===v));
+ document.querySelectorAll('#nav button').forEach(b=>b.classList.toggle('on',b.dataset.v===v));
  if(v==='reels')loadReels();if(v==='discover')renderDiscover();if(v==='post')renderPost();if(v==='me')renderMe();
 }
-document.querySelectorAll('nav button').forEach(b=>b.onclick=()=>show(b.dataset.v));
-loadReels();
+document.documentElement.lang=lang==='ku'?'ckb':lang;document.documentElement.dir=lang==='en'?'ltr':'rtl';document.title=t('brand');
+chrome();loadReels();
 </script></body></html>
